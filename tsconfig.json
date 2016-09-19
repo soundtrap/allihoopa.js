@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "declaration": false,
+        "module": "commonjs",
+        "jsx": "react",
+        "target": "es5",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "preserveConstEnums": true,
+        "outDir": "lib"
+    },
+    "include": [
+        "src/**/*",
+        "typings/index.d.ts",
+        "typings/react-dom/index.d.ts",
+        "typings/react/index.d.ts",
+        "typings/radium/index.d.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
