@@ -14,6 +14,7 @@ fi
 
 ./scripts/clean.sh
 
+./node_modules/.bin/typings install
 ./node_modules/.bin/tsc --declaration
 ./node_modules/.bin/webpack
 ./node_modules/.bin/webpack --production
