@@ -2,8 +2,19 @@
   "name": "allihoopa",
   "version": "0.1.0",
   "description": "SDK for the Allihoopa service",
+  "homepage": "https://github.com/allihoopa/allihoopa.js",
+  "keywords": [
+    "music", "allihoopa", "audio", "web audio"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allihoopa/allihoopa.js.git"
+  },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "contributors": [
+    "Magnus Hallin <magnus@allihoopa.com>"
+  ],
   "scripts": {
     "clean": "./scripts/clean.sh",
     "prepublish": "./scripts/build.sh",
@@ -15,7 +26,7 @@
     "dist/",
     "lib/"
   ],
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
     "jasmine-core": "^2.5.2",
     "karma": "^1.3.0",

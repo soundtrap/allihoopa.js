@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eu
 
@@ -12,13 +12,21 @@ if [ ! -d node_modules ]; then
     exit 1
 fi
 
+WEBPACK_EXTRA=
+
+if [ "${TRAVIS_TAG}" != "" ]; then
+    echo "Tagging release for ${TRAVIS_TAG}"
+    echo
+    echo "Naming release ${TRAVIS_TAG/v/}"
+    WEBPACK_EXTRA=--versionTag=${TRAVIS_TAG/v/}
+fi
+
 ./scripts/clean.sh
 
 ./node_modules/.bin/typings install
 ./node_modules/.bin/tsc --declaration
 
-# TODO: Add --versionTag=... from enviroment here when building for releases
-./node_modules/.bin/webpack
-./node_modules/.bin/webpack --production
-./node_modules/.bin/webpack --externalReact
-./node_modules/.bin/webpack --externalReact --production
+./node_modules/.bin/webpack $WEBPACK_EXTRA
+./node_modules/.bin/webpack --production $WEBPACK_EXTRA
+./node_modules/.bin/webpack --externalReact $WEBPACK_EXTRA
+./node_modules/.bin/webpack --externalReact --production $WEBPACK_EXTRA
