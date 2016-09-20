@@ -3,13 +3,27 @@ var path = require('path');
 var yargs = require('yargs');
 var failPlugin = require('webpack-fail-plugin');
 
-var outputFilename = 'allihoopa.js';
 var plugins = [
     failPlugin,
 ];
+var externals = {};
 
+var outputBasename = 'allihoopa';
+if (yargs.argv.externalReact) {
+    outputBasename = 'allihoopa-standalone';
+    externals = {
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+    };
+}
+
+if (yargs.argv.versionTag) {
+    outputBasename += `-${yargs.argv.versionTag}`;
+}
+
+var outputFilename = `${outputBasename}.js`;
 if (yargs.argv.production) {
-    outputFilename = 'allihoopa.min.js';
+    outputFilename = `${outputBasename}.min.js`;
     plugins.push(new webpack.optimize.UglifyJsPlugin({
         minimize: true,
         compress: {
@@ -45,4 +59,5 @@ module.exports = {
         emitErrors: true,
         failOnHint: true,
     },
+    externals: externals,
 };

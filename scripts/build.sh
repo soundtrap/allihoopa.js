@@ -16,5 +16,9 @@ fi
 
 ./node_modules/.bin/typings install
 ./node_modules/.bin/tsc --declaration
+
+# TODO: Add --versionTag=... from enviroment here when building for releases
 ./node_modules/.bin/webpack
 ./node_modules/.bin/webpack --production
+./node_modules/.bin/webpack --externalReact
+./node_modules/.bin/webpack --externalReact --production
