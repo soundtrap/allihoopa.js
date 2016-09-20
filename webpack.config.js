@@ -1,10 +1,10 @@
-const webpack = require('webpack');
-const path = require('path');
-const yargs = require('yargs');
-const failPlugin = require('webpack-fail-plugin');
+var webpack = require('webpack');
+var path = require('path');
+var yargs = require('yargs');
+var failPlugin = require('webpack-fail-plugin');
 
-let outputFilename = 'allihoopa.js';
-const plugins = [
+var outputFilename = 'allihoopa.js';
+var plugins = [
     failPlugin,
 ];
 
