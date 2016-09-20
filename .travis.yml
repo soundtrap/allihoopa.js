@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+    - "5"
+    - "6"
+
+before_script:
+    - npm install karma-firefox-launcher karma-phantomjs-launcher
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3  # Give Xvfb some time to start
+
+script:
+    - npm run test:travis-browsers
