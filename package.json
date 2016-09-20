@@ -8,7 +8,7 @@
     "clean": "./scripts/clean.sh",
     "prepublish": "./scripts/build.sh",
     "build:watch": "webpack --watch",
-    "test:travis-browsers": "karma start --single-run --browsers Firefox,PhantomJS",
+    "test:travis-browsers": "karma start --single-run --browsers Firefox,PhantomJS,Chrome_travis_ci",
     "test:watch": "karma start"
   },
   "files": [

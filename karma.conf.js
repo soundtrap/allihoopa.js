@@ -66,6 +66,15 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
+    concurrency: Infinity,
+
+    // Start Chrome with --no-sandbox flag, see
+    // https://github.com/karma-runner/karma/issues/1144#issuecomment-53633076
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox'],
+      },
+    },
+  });
 }
