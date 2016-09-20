@@ -12,10 +12,8 @@
     },
     "include": [
         "src/**/*",
-        "typings/index.d.ts",
-        "typings/react-dom/index.d.ts",
-        "typings/react/index.d.ts",
-        "typings/radium/index.d.ts"
+        "test/**/*",
+        "typings/index.d.ts"
     ],
     "exclude": [
         "node_modules"

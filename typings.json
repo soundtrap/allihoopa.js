@@ -2,6 +2,9 @@
   "name": "allihoopa",
   "dependencies": {},
   "globalDependencies": {
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
+    "karma": "registry:dt/karma#0.13.9+20160811111312",
+    "karma-jasmine": "registry:dt/karma-jasmine#0.0.0+20160316155526",
     "radium": "registry:dt/radium#0.18.1+20160907102602",
     "react": "registry:dt/react#0.14.0+20160829191040",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
