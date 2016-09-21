@@ -4,7 +4,7 @@
   "description": "Test harness for the Allihoopa SDK",
   "main": "index.js",
   "scripts": {
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server --content-base assets"
   },
   "author": "",
   "license": "SEE LICENSE IN ../LICENSE",
