@@ -14,11 +14,13 @@ fi
 
 WEBPACK_EXTRA=
 
-if [ "${TRAVIS_TAG}" != "" ]; then
-    echo "Tagging release for ${TRAVIS_TAG}"
-    echo
-    echo "Naming release ${TRAVIS_TAG/v/}"
-    WEBPACK_EXTRA=--versionTag=${TRAVIS_TAG/v/}
+if [ -n "${TRAVIS_TAG+set}" ]; then 
+    if [ "${TRAVIS_TAG?}" != "" ]; then
+        echo "Tagging release for ${TRAVIS_TAG}"
+        echo
+        echo "Naming release ${TRAVIS_TAG/v/}"
+        WEBPACK_EXTRA=--versionTag=${TRAVIS_TAG/v/}
+    fi
 fi
 
 ./scripts/clean.sh
