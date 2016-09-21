@@ -4,7 +4,7 @@
   "description": "Test harness for the Allihoopa SDK",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-server": "webpack-dev-server"
   },
   "author": "",
   "license": "SEE LICENSE IN ../LICENSE",
