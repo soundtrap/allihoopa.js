@@ -50,6 +50,7 @@
   "dependencies": {
     "radium": "^0.18.0",
     "react": "^15.0.0",
-    "react-dom": "^15.0.0"
+    "react-dom": "^15.0.0",
+    "react-frame-component": "^0.6.0"
   }
 }

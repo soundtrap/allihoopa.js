@@ -52,7 +52,7 @@ module.exports = {
     },
     resolve: {
         root: path.resolve('./src'),
-        extensions: [ '', '.js', '.ts', ],
+        extensions: [ '', '.js', '.ts', '.tsx'],
     },
     plugins: plugins,
     tslint: {

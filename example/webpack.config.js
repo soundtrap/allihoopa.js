@@ -9,7 +9,7 @@ if (!APP_KEY || !APP_SECRET) {
 }
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
 
     output: {
         path: path.join(__dirname, '/dist'),
@@ -27,7 +27,7 @@ module.exports = {
     },
     resolve: {
         root: path.resolve('./src'),
-        extensions: [ '', '.js', '.ts', ],
+        extensions: [ '', '.js', '.ts', '.tsx'],
     },
     tslint: {
         emitErrors: true,
