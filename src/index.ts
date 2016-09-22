@@ -1,3 +1,2 @@
-export function authenticate() {
-    console.log('authenticating');
-}
+export { setup } from './config';
+export { authenticate } from './auth';
