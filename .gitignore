@@ -4,3 +4,5 @@
 /typings
 /example/dist
 /example/node_modules
+
+npm-debug.log

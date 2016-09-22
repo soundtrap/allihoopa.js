@@ -37,7 +37,18 @@ through to this project.
 
 ## Building and running
 
-You will need three processes running in parallel to work on the SDK:
+In order to run the example, you need an app key and secret to be used with
+the Allihoopa APIs. These should be specified in the  `ALLIHOOPA_APP_KEY` and
+`ALLIHOOPA_APP_SECRET` environment variables, e.g. by adding the following to
+your `~/.profile`:
+
+```bash
+export ALLIHOOPA_APP_KEY=your-app-key
+export ALLIHOOPA_APP_SECRET=your-app-secret
+```
+
+To work on the SDK through this example, you will need three processes running
+in parallel:
 
 * TypeScript compiler in the SDK root. Start with `npm run tsc:watch` in the
   parent folder.
