@@ -32,7 +32,7 @@ dropButton.addEventListener('click', () => {
     }
 
     ReactDOM.render(
-        <Allihoopa.DropWindow compiler='TypeScript' framework='React' />,
+        <Allihoopa.DropOverlay compiler='TypeScript' framework='React' />,
         element
     );
 });
