@@ -14,13 +14,13 @@ export interface DropOverlayState {
     description: string;
     descriptionActive: boolean;
     listed: boolean;
+    coverImageUrlWithFallback: string;
+    hasCoverImage: boolean;
+    coverImageData: any;
 }
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
     input: HTMLElement;
-    coverImageUrlWithFallback: string;
-    hasCoverImage: boolean;
-    coverImageData: any;
     description: string;
     title: string;
 
@@ -33,7 +33,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             titleActive: false,
             description: '',
             descriptionActive: false,
-            listed: false
+            listed: false,
+            coverImageUrlWithFallback: '';
+            hasCoverImage: false;
+            coverImageData: null;
         };
     }
 
@@ -58,8 +61,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
         const reader = new FileReader();
 
         reader.onloadend = () => {
-            this.coverImageUrlWithFallback = reader.result;
-            this.hasCoverImage = true;
+            this.setState({
+                coverImageUrlWithFallback: reader.result,
+                hasCoverImage: true
+            });
         };
 
         reader.readAsDataURL(image);
@@ -67,7 +72,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
         const binaryReader  = new FileReader();
 
         binaryReader.onloadend = () => {
-            this.coverImageData = binaryReader.result.match(/,(.*)$/)[1];
+            this.setState({
+                coverImageData: binaryReader.result.match(/,(.*)$/)[1]
+            });
         };
 
         binaryReader.readAsDataURL(image);
