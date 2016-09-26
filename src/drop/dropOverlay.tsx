@@ -101,16 +101,15 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                     >
                                         Title
                                     </label><br />
-                                    <input style={[styles.dropPieceTitleInput, styles.dropFormControl]}
+                                    <input
+                                        style={[styles.dropPieceTitleInput, styles.dropFormControl]}
                                         name='title'
                                         id='title'
                                         key='title'
                                         ref={(title) => { this.title = title; }}
                                         placeholder='Song title'
                                         size='50'
-                                        maxLength='50'
-                                        value={''}
-                                        onChange={this.handleTitleChange} />
+                                        maxLength='50' />
                                 </p>
                             </div>
 
@@ -124,15 +123,14 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                     </label>
                                     <span style={[styles.dropCharacterCount]}>{charactersLeft}</span>
 
-                                    <textarea style={[styles.dropPieceDescriptionTextarea, styles.dropFormControl]}
+                                    <textarea
+                                        style={[styles.dropPieceDescriptionTextarea, styles.dropFormControl]}
                                         name='description'
                                         id='description'
                                         key='description'
                                         ref={(description) => { this.description = description; }}
                                         placeholder='Describe your piece'
-                                        maxLength='140'
-                                        value={''}
-                                        onChange={this.handleDescriptionChange} />
+                                        maxLength='140' />
                                 </p>
                             </div>
                             <div>
