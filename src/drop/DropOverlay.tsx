@@ -21,8 +21,6 @@ export interface DropOverlayState {
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
     input: HTMLElement;
-    description: string;
-    title: string;
 
     public state: DropOverlayState;
 
@@ -104,9 +102,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             position: 'absolute',
             width: '100%',
             height: '100%',
-            top: '0',
-            left: '0',
-            border: '0'
+            top: 0,
+            left: 0,
+            border: 0
         };
 
         let charactersLeft = 140;
@@ -155,7 +153,7 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         htmlFor='title'
                                         style={[
                                             styles.dropControlLabel,
-                                             this.state.titleActive && styles.active
+                                            this.state.titleActive && styles.active
                                         ]}
                                     >
                                         Title
@@ -165,11 +163,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         name='title'
                                         id='title'
                                         key='title'
-                                        ref={(title) => { this.title = title; }}
                                         placeholder='Song title'
-                                        size='50'
-                                        maxLength='50'
-                                        onChange={(e) => this.setState({title: e.target.value})}
+                                        size={50}
+                                        maxLength={50}
+                                        onChange={(e) => this.setState({title: (e.target as HTMLInputElement).value})}
                                         onFocus={() => this.setState({titleActive: true})}
                                         onBlur={() => this.setState({titleActive: false})} />
                                 </p>
@@ -192,10 +189,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         name='description'
                                         id='description'
                                         key='description'
-                                        ref={(description) => { this.description = description; }}
                                         placeholder='Describe your piece'
-                                        maxLength='140'
-                                        onChange={(e) => this.setState({description: e.target.value})}
+                                        maxLength={140}
+                                        onChange={(e) => this.setState({description: (e.target as HTMLInputElement).value})}
                                         onFocus={() => this.setState({descriptionActive: true})}
                                         onBlur={() => this.setState({descriptionActive: false})} />
                                 </p>
@@ -206,7 +202,7 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                     <Toggle
                                         enabledTitle='Listed'
                                         disabledTitle='Unlisted'
-                                        value={this.state.listed}
+                                        value={!!this.state.listed}
                                         onChange={() => this.setState({listed: !this.state.listed})}
                                     />
                                 </p>

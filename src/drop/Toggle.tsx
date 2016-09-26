@@ -10,7 +10,6 @@ export interface ToggleProps {
 
 @Radium
 export default class Toggle extends React.Component<ToggleProps, {}> {
-
     render() {
         return (
             <span style={[styles.toggleContainer]}>
