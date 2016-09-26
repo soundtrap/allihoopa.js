@@ -228,6 +228,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
     }
 }
 
+const turquoise = '#23a6bd';
+const masala = '#4A4A4A';
+const dustygray = '#9B9B9B';
+
 const styles = {
     dropOverlay: {
         background: '#fff',
@@ -276,7 +280,7 @@ const styles = {
         height: '100%'
     },
     colorLink: {
-        color: '#23a6bd',
+        color: turquoise,
         textDecoration: 'none',
         ':visited': {
             color: '#7eccd9'
@@ -309,7 +313,7 @@ const styles = {
         fontSize: '14px'
     },
     active: {
-        color: '#7eccd9'
+        color: turquoise
     },
     dropPieceTitleInput: {
         padding: '12px'
@@ -319,14 +323,15 @@ const styles = {
         padding: '14px',
         borderRadius: 0,
         fontSize: '16px',
-        color: '#4A4A4A',
+        color: masala,
         border: '1px solid #CCC',
         width: 'calc(100% - 26px)',
         WebkitAppearance: 'none',
         ':focus': {
-            border: '1px solid #7eccd9',
-            background: 'rgba(#4A4A4A, 0.03)',
-            boxShadow: 'none'
+            boxShadow: 'none',
+            outline: 'none',
+            border: `1px solid ${turquoise}`,
+            background: 'rgba(74, 74, 74, 0.03)'
         }
     },
     dropPieceDescription: {
