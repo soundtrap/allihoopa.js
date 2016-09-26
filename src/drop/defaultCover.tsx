@@ -91,22 +91,6 @@ export default class DefaultCover extends React.Component<{}, {}> {
               <g
                  id='layer1'
                  transform='translate(-44.597981,-594.00508)'>
-                <text
-                   style={{'fontSize':'52.22857285px','fontStyle':'normal','fontWeight':'normal','fill':'#000000','fillOpacity':1,'stroke':'none','strokeWidth':1,'strokeLinecap':'butt','strokeLinejoin':'miter','strokeOpacity':1,'fontFamily':'Bitstream Vera Sans'}}
-                   x='-932.4021'
-                   y='125.72334'
-                   id='text9045'><tspan
-                     id='tspan9047'
-                     x='-932.4021'
-                     y='125.72334' /></text>
-                <text
-                   style={{'fontSize':'52.22857285px','fontStyle':'normal','fontWeight':'normal','fill':'#000000','fillOpacity':1,'stroke':'none','strokeWidth':1,'strokeLinecap':'butt','strokeLinejoin':'miter','strokeOpacity':1,'fontFamily':'Bitstream Vera Sans'}}
-                   x='1773.0911'
-                   y='449.68774'
-                   id='text2195'><tspan
-                     id='tspan2197'
-                     x='1773.0911'
-                     y='449.68774' /></text>
                 <g
                    id='g3534'
                    transform='matrix(0.2297593,0,0,0.2297593,34.35118,573.063)'>
@@ -159,48 +143,6 @@ export default class DefaultCover extends React.Component<{}, {}> {
                        d='M 1733.6542,271.17601 L 1730.2414,281.93528 C 1731.6505,281.90196 1733.0368,282.01117 1734.3437,282.28202 L 1733.6542,271.17601 z M 1722.4503,272.96461 L 1723.2432,283.37164 C 1724.4998,282.85448 1725.8171,282.50455 1727.1732,282.25186 L 1722.4503,272.96461 z M 1744.341,273.74413 L 1736.9291,283.04401 C 1738.249,283.54398 1739.4879,284.18564 1740.6178,284.9801 L 1744.341,273.74413 z M 1712.3495,278.89202 L 1716.9,287.50565 C 1717.8793,286.59023 1718.9364,285.72541 1720.0716,285.00774 L 1712.3495,278.89202 z M 1752.8214,280.37617 L 1742.5139,286.5639 C 1743.5103,287.5181 1744.3983,288.58442 1745.134,289.77034 L 1752.8214,280.37617 z M 1704.9722,288.08531 L 1712.3151,293.68431 C 1712.8797,292.53678 1713.5192,291.46241 1714.2801,290.43549 L 1704.9722,288.08531 z M 1757.8546,289.97964 L 1746.2715,291.94099 C 1746.821,293.21052 1747.2075,294.57425 1747.4436,296.00452 L 1757.8546,289.97964 z M 1710.8327,297.6127 L 1701.387,299.06728 L 1710.2811,301.14524 C 1710.3635,299.94361 1710.537,298.76226 1710.8327,297.6127 z M 1747.6849,298.56784 C 1747.6884,298.71703 1747.7193,298.86248 1747.7193,299.01283 C 1747.7193,300.33288 1747.5656,301.61029 1747.3057,302.87742 L 1758.613,301.14826 L 1747.6849,298.56784 z M 1710.4881,305.40092 L 1702.1454,310.23589 L 1711.3499,308.70009 C 1710.9568,307.65097 1710.6757,306.55138 1710.4881,305.40092 z M 1746.5128,305.63925 C 1746.0243,306.99387 1745.4055,308.31166 1744.6512,309.53356 L 1755.0278,312.16469 L 1746.5128,305.63925 z M 1713.2459,312.38678 L 1707.1786,319.83936 L 1715.4176,314.9105 C 1714.6104,314.14073 1713.8856,313.31076 1713.2459,312.38678 z M 1742.7552,312.12104 C 1741.85,313.18981 1740.8517,314.17654 1739.7561,315.05127 L 1747.6505,321.32351 L 1742.7552,312.12104 z M 1718.6927,317.36724 L 1715.659,326.47139 L 1721.8298,318.7335 C 1720.7229,318.3798 1719.6815,317.92564 1718.6927,317.36724 z M 1736.7568,317.05073 C 1735.6123,317.68034 1734.3912,318.18816 1733.1372,318.59012 L 1737.5497,327.25092 L 1736.7568,317.05073 z M 1725.7597,319.47531 L 1726.3458,329.07399 L 1729.414,319.41509 C 1729.2618,319.43274 1729.1189,319.4767 1728.9658,319.49078 C 1727.876,319.59098 1726.7988,319.55849 1725.7597,319.47531 z '
                        id='path3494' />
                   </g>
-                  <text
-                     id='text1963'
-                     y='660.36151'
-                     x='333.50842'
-                     style={{'fontSize':'49px','fill':'#ffffff','fontFamily':'Sans'}}
-                     ><tspan
-                       style={{'fontSize':'49px','fill':'#ffffff','fontFamily':'Sans'}}
-                       y='660.36151'
-                       x='333.50842'
-                       id='tspan1965'/><tspan
-                       id='tspan2171'
-                       style={{'fontSize':'49px','fill':'#ffffff','fontFamily':'Sans'}}
-                       y='721.61151'
-                       x='333.50842'
-                       >to upload one</tspan></text>
-                  <text
-                     style={{'fontSize':'49.94577026px','fontStyle':'normal','fontVariant':'normal','fontWeight':'normal','fontStretch':'normal','textAlign':'start','lineHeight':'129.99999523%','writingMode':'lr-tb','textAnchor':'start','fill':'#ffffff','fillOpacity':1,'stroke':'none','strokeWidth':1,'strokeLinecap':'butt','strokeLinejoin':'miter','strokeOpacity':1,'fontFamily':'Arial'}}
-                     x='380.99408'
-                     y='336.99634'
-                     id='text9051'><tspan
-                       id='tspan9064'
-                       x='380.99408'
-                       y='336.99634'
-                       style={{'fontSize':'59.93492508px','fontStyle':'normal','fontVariant':'normal','fontWeight':'bold','fontStretch':'normal','textAlign':'center','lineHeight':'129.99999523%','writingMode':'lr-tb','textAnchor':'middle','fill':'#ffffff','fillOpacity':1,'fontFamily':'Sans'}}>No cover</tspan><tspan
-                       x='380.99408'
-                       y='414.91174'
-                       style={{'fontSize':'59.93492508px','fontStyle':'normal','fontVariant':'normal','fontWeight':'bold','fontStretch':'normal','textAlign':'center','lineHeight':'129.99999523%','writingMode':'lr-tb','textAnchor':'middle','fill':'#ffffff','fillOpacity':1,'fontFamily':'Sans'}}
-                       id='tspan2204'>available</tspan></text>
-                  <text
-                     id='text3520'
-                     y='660.36151'
-                     x='70.589256'
-                     style={{'fontSize':'49px','fill':'#ffffff'}}><tspan
-                       style={{'fontSize':'49px','fill':'#ffffff'}}
-                       y='660.36151'
-                       x='70.589256'
-                       id='tspan3522' /><tspan
-                       id='tspan3526'
-                       style={{'fontSize':'49px','fill':'#ffffff','fontFamily':'Sans'}}
-                       y='721.61151'
-                       x='70.589256'
-                       >Click here</tspan></text>
                 </g>
               </g>
             </svg>
