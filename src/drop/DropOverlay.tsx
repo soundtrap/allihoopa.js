@@ -84,7 +84,13 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
     }
 
     handleCloseClick(e: any): void {
-        const element = document.getElementById('dropIframe').parentNode;
+        const iframe = document.getElementById('dropIframe');
+
+        if (!iframe) {
+            throw new Error('Could not find element');
+        }
+
+        const element = iframe.parentElement;
 
         if (!element) {
             throw new Error('Could not find element');
