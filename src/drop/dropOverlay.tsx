@@ -8,7 +8,14 @@ import Toggle from './Toggle';
 
 export interface DropOverlayProps { compiler: string; framework: string; }
 
-export class DropOverlay extends React.Component<DropOverlayProps, {}> {
+export interface DropOverlayState {
+    title: string;
+    titleActive: boolean;
+    description: string;
+    descriptionActive: boolean;
+}
+
+export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
     input: HTMLElement;
     coverImageUrlWithFallback: string;
     hasCoverImage: boolean;
@@ -21,7 +28,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
     constructor(props: DropOverlayProps) {
         super(props);
         this.state = {
-            description: ''
+            title: '',
+            titleActive: false,
+            description: '',
+            descriptionActive: false
         };
     }
 
@@ -59,13 +69,6 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
         };
 
         binaryReader.readAsDataURL(image);
-    }
-
-    handleDescription(e: any): void {
-        const value: string = e.target.value;
-        this.setState({
-            description: value
-        });
     }
 
     render() {
@@ -112,7 +115,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                 <p>
                                     <label
                                         htmlFor='title'
-                                        style={[styles.dropControlLabel]}
+                                        style={[
+                                            styles.dropControlLabel,
+                                             this.state.titleActive && styles.active
+                                        ]}
                                     >
                                         Title
                                     </label><br />
@@ -124,7 +130,10 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                         ref={(title) => { this.title = title; }}
                                         placeholder='Song title'
                                         size='50'
-                                        maxLength='50' />
+                                        maxLength='50'
+                                        onChange={(e) => this.setState({title: e.target.value})}
+                                        onFocus={(e) => this.setState({titleActive: true})}
+                                        onBlur={(e) => this.setState({titleActive: false})} />
                                 </p>
                             </div>
 
@@ -132,7 +141,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                <p>
                                     <label
                                         htmlFor='description'
-                                        style={[styles.dropControlLabel]}
+                                        style={[
+                                            styles.dropControlLabel,
+                                            this.state.descriptionActive && styles.active]}
                                     >
                                         Description
                                     </label>
@@ -146,7 +157,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                         ref={(description) => { this.description = description; }}
                                         placeholder='Describe your piece'
                                         maxLength='140'
-                                        onChange={(e) => this.handleDescription(e)} />
+                                        onChange={(e) => this.setState({description: e.target.value})}
+                                        onFocus={(e) => this.setState({descriptionActive: true})}
+                                        onBlur={(e) => this.setState({descriptionActive: false})} />
                                 </p>
                             </div>
                             <div>
