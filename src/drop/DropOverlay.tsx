@@ -116,7 +116,17 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                             <h3 style={[styles.dropHeading]}>Drop to Allihoopa</h3>
                             <p style={[styles.dropCoverLabel]}>Cover Image</p>
                             <div style={[styles.dropCoverContainer]}>
-                                <DefaultCover />
+                                { this.state.hasCoverImage ?
+                                    <div
+                                        style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                background: `url(${this.state.coverImageUrlWithFallback}) center center / cover no-repeat`,
+                                            }}
+                                    ></div> :
+                                    <DefaultCover />
+
+                                }
                             </div>
                             <a
                                 href='#'
