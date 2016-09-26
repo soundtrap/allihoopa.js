@@ -35,19 +35,18 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
         }
 
         const reader = new FileReader();
-        const _this = this;
-        reader.onloadend = (_this) => {
-            _this.coverImageUrlWithFallback = reader.result;
-            _this.hasCoverImage = true;
+
+        reader.onloadend = () => {
+            this.coverImageUrlWithFallback = reader.result;
+            this.hasCoverImage = true;
         };
 
         reader.readAsDataURL(image);
 
-
         const binaryReader  = new FileReader();
 
-        binaryReader.onloadend = (_this) => {
-            _this.coverImageData = binaryReader.result.match(/,(.*)$/)[1];
+        binaryReader.onloadend = () => {
+            this.coverImageData = binaryReader.result.match(/,(.*)$/)[1];
         };
 
         binaryReader.readAsDataURL(image);
@@ -91,7 +90,7 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                 id='coverImageInput'
                                 style={[styles.dropCoverImageInput]}
                                 value=''
-                                onChange={this.handleImageInput} />
+                                onChange={(e) => this.handleImageInput(e)} />
 
                             <div style={[styles.dropPieceTitle]}>
                                 <p>
