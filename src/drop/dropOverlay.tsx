@@ -16,6 +16,15 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
     description: string;
     title: string;
 
+    public state: DropOverlayState;
+
+    constructor(props: DropOverlayProps) {
+        super(props);
+        this.state = {
+            description: ''
+        };
+    }
+
     openFileBrowser(e: any): void {
         e.preventDefault();
 
@@ -52,6 +61,13 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
         binaryReader.readAsDataURL(image);
     }
 
+    handleDescription(e: any): void {
+        const value: string = e.target.value;
+        this.setState({
+            description: value
+        });
+    }
+
     render() {
         const iframeStyles = {
             position: 'absolute',
@@ -63,8 +79,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
         };
 
         let charactersLeft = 140;
-        if (this.description) {
-            charactersLeft = 140 - this.description.value.length;
+        if (this.state.description) {
+            charactersLeft = 140 - this.state.description.length;
         }
 
         return (
@@ -129,18 +145,13 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                         key='description'
                                         ref={(description) => { this.description = description; }}
                                         placeholder='Describe your piece'
-                                        maxLength='140' />
+                                        maxLength='140'
+                                        onChange={(e) => this.handleDescription(e)} />
                                 </p>
                             </div>
                             <div>
                                 <p>
                                     <span style={[styles.dropPieceVisibility]}>Visibility</span>
-                                    <Toggle
-                                        enabledTitle='Listed'
-                                        disabledTitle='Unlisted'
-                                        value={this.isListed}
-                                        onChange={this.handleVisibilityChange}
-                                    />
                                 </p>
                             </div>
                             <div style={[styles.dropPieceButtons]}>
