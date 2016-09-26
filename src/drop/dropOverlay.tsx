@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import {StyleRoot} from 'radium';
 const Frame = require('react-frame-component');
 
-import DefaultCover from './defaultCover';
+import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 
 export interface DropOverlayProps { compiler: string; framework: string; }
@@ -71,6 +71,19 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
         };
 
         binaryReader.readAsDataURL(image);
+    }
+
+    handleDropClick(e: any): void {
+    }
+
+    handleCloseClick(e: any): void {
+        const element = document.getElementById('dropIframe').parentNode;
+
+        if (!element) {
+            throw new Error('Could not find element');
+        }
+
+        ReactDOM.unmountComponentAtNode(element);
     }
 
     render() {
@@ -178,15 +191,15 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                             <div style={[styles.dropPieceButtons]}>
                                 <a
                                     href='#'
-                                    key='save'
-                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropSave]}
-                                    onClick={this.handleSaveClick}>Save</a>
+                                    key='drop'
+                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
+                                    onClick={(e) => this.handleDropClick(e)}>Drop</a>
 
                                 <a
                                     href='#'
                                     key='cancel'
                                     style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
-                                    onClick={this.handleCloseClick}>Cancel</a>
+                                    onClick={(e) => this.handleCloseClick(e)}>Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -346,7 +359,7 @@ const styles = {
     dropCancel: {
         marginRight: '26px'
     },
-    dropSave: {
+    dropDrop: {
         marginLeft: '2px',
         '@media (max-width: 768px)': {
             marginLeft: '20px'

@@ -1,3 +1,3 @@
 export { setup } from './config';
 export { authenticate } from './auth';
-export { DropOverlay } from './drop/dropOverlay';
+export { DropOverlay } from './drop/DropOverlay';
