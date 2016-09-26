@@ -13,6 +13,7 @@ export interface DropOverlayState {
     titleActive: boolean;
     description: string;
     descriptionActive: boolean;
+    listed: boolean;
 }
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
@@ -31,7 +32,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             title: '',
             titleActive: false,
             description: '',
-            descriptionActive: false
+            descriptionActive: false,
+            listed: false
         };
     }
 
@@ -132,8 +134,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         size='50'
                                         maxLength='50'
                                         onChange={(e) => this.setState({title: e.target.value})}
-                                        onFocus={(e) => this.setState({titleActive: true})}
-                                        onBlur={(e) => this.setState({titleActive: false})} />
+                                        onFocus={() => this.setState({titleActive: true})}
+                                        onBlur={() => this.setState({titleActive: false})} />
                                 </p>
                             </div>
 
@@ -158,13 +160,19 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         placeholder='Describe your piece'
                                         maxLength='140'
                                         onChange={(e) => this.setState({description: e.target.value})}
-                                        onFocus={(e) => this.setState({descriptionActive: true})}
-                                        onBlur={(e) => this.setState({descriptionActive: false})} />
+                                        onFocus={() => this.setState({descriptionActive: true})}
+                                        onBlur={() => this.setState({descriptionActive: false})} />
                                 </p>
                             </div>
                             <div>
                                 <p>
                                     <span style={[styles.dropPieceVisibility]}>Visibility</span>
+                                    <Toggle
+                                        enabledTitle='Listed'
+                                        disabledTitle='Unlisted'
+                                        value={this.state.listed}
+                                        onChange={() => this.setState({listed: !this.state.listed})}
+                                    />
                                 </p>
                             </div>
                             <div style={[styles.dropPieceButtons]}>
