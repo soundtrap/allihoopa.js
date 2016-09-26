@@ -47,7 +47,7 @@ module.exports = {
             { test: /\.tsx?$/, loader: 'tslint', exclude: /node_modules/, },
         ],
         loaders: [
-            { test: /\.tsx?$/, loader: 'ts', exclude: /node_modules/, }
+            { test: /\.tsx?$/, loader: 'ts', exclude: /node_modules/, },
         ],
     },
     resolve: {
