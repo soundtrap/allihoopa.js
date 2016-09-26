@@ -312,24 +312,21 @@ const styles = {
         color: '#7eccd9'
     },
     dropPieceTitleInput: {
-        fontSize: '14px',
-        color: '#4A4A4A',
-        padding: '12px',
-        ':focus': {
-            background: 'rgba(#4A4A4A, 0.03)',
-            boxShadow: 'none'
-        }
+        padding: '12px'
     },
     dropFormControl: {
         display: 'block',
-        padding: '12px',
+        padding: '14px',
         borderRadius: 0,
         fontSize: '16px',
+        color: '#4A4A4A',
         border: '1px solid #CCC',
         width: 'calc(100% - 26px)',
         WebkitAppearance: 'none',
         ':focus': {
-            border: '1px solid #7eccd9'
+            border: '1px solid #7eccd9',
+            background: 'rgba(#4A4A4A, 0.03)',
+            boxShadow: 'none'
         }
     },
     dropPieceDescription: {
@@ -343,15 +340,7 @@ const styles = {
         float: 'right'
     },
     dropPieceDescriptionTextarea: {
-        fontSize: '14px',
-        color: '#4A4A4A',
-        padding: '12px',
-        height: 'auto',
-        border: '1px solid #CCC',
-        ':focus': {
-            background: 'rgba(#4A4A4A, 0.03)',
-            boxShadow: 'none'
-        }
+        resize: 'vertical'
     },
     dropPieceVisibility: {
         display: 'inline-block',
