@@ -235,54 +235,57 @@ const styles = {
     },
     dropPieceTitle: {
         marginTop: '12px',
-        display: 'block'
-        width: 'calc(100% - 26px)',
+        display: 'block',
+        width: '100%',
         marginBottom: '16px',
         position: 'relative'
     },
     dropControlLabel: {
-
+        color: '#9B9B9B',
+        fontSize: '14px'
+    },
+    active: {
+        color: '#7eccd9'
     },
     dropPieceTitleInput: {
         fontSize: '14px',
         color: '#4A4A4A',
         padding: '12px',
-        width: '100%',
         ':focus': {
-            background: 'rgba(#4A4A4A, 0.03)'
+            background: 'rgba(#4A4A4A, 0.03)',
             boxShadow: 'none'
         }
     },
     dropFormControl: {
         display: 'block',
-        width: '100%',
         padding: '12px',
         borderRadius: 0,
         fontSize: '16px',
         border: '1px solid #CCC',
+        width: 'calc(100% - 26px)',
         WebkitAppearance: 'none',
         ':focus': {
             border: '1px solid #7eccd9'
         }
     },
     dropPieceDescription: {
-        display: 'block'
-        width: 'calc(100% - 26px)',
+        display: 'block',
+        width: '100%',
         marginBottom: '16px',
         position: 'relative'
     },
     dropCharacterCount: {
-
+        fontSize: '12px',
+        float: 'right'
     },
     dropPieceDescriptionTextarea: {
         fontSize: '14px',
         color: '#4A4A4A',
         padding: '12px',
-        width: '100%',
         height: 'auto',
         border: '1px solid #CCC',
         ':focus': {
-            background: 'rgba(#4A4A4A, 0.03)'
+            background: 'rgba(#4A4A4A, 0.03)',
             boxShadow: 'none'
         }
     },
@@ -308,10 +311,10 @@ const styles = {
         marginTop: '3px',
         textTransform: 'uppercase',
         fontSize: '14px'
-    }
+    },
     dropCancel: {
         marginRight: '26px'
-    }
+    },
     dropSave: {
         marginLeft: '2px',
         '@media (max-width: 768px)': {
