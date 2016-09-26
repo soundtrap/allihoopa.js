@@ -34,9 +34,9 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             description: '',
             descriptionActive: false,
             listed: false,
-            coverImageUrlWithFallback: '';
-            hasCoverImage: false;
-            coverImageData: null;
+            coverImageUrlWithFallback: '',
+            hasCoverImage: false,
+            coverImageData: null
         };
     }
 
