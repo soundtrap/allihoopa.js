@@ -242,7 +242,7 @@ const styles = {
         justifyContent: 'center'
     },
     dropContainer: {
-        background: '#eee',
+        background: '#fff',
         textAlign: 'left',
         maxWidth: '460px',
         width: '100%',
@@ -276,7 +276,8 @@ const styles = {
         height: '100%'
     },
     colorLink: {
-        color: '#7eccd9',
+        color: '#23a6bd',
+        textDecoration: 'none',
         ':visited': {
             color: '#7eccd9'
         },
