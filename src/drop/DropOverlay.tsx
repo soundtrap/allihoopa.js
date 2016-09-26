@@ -9,14 +9,14 @@ import Toggle from './Toggle';
 export interface DropOverlayProps { compiler: string; framework: string; }
 
 export interface DropOverlayState {
-    title: string;
-    titleActive: boolean;
-    description: string;
-    descriptionActive: boolean;
-    listed: boolean;
-    coverImageUrlWithFallback: string;
-    hasCoverImage: boolean;
-    coverImageData: any;
+    title?: string;
+    titleActive?: boolean;
+    description?: string;
+    descriptionActive?: boolean;
+    listed?: boolean;
+    coverImageUrlWithFallback?: string;
+    hasCoverImage?: boolean;
+    coverImageData?: any;
 }
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
