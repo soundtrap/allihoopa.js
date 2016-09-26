@@ -147,9 +147,17 @@ export class DropOverlay extends React.Component<DropOverlayProps, {}> {
                                 </p>
                             </div>
                             <div style={[styles.dropPieceButtons]}>
-                                <a href='#' style={[styles.dropLink, styles.dropLinkButtons, styles.dropSave]} onClick={this.handleSaveClick}>Save</a>
+                                <a
+                                    href='#'
+                                    key='save'
+                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropSave]}
+                                    onClick={this.handleSaveClick}>Save</a>
 
-                                <a href='#' style={[styles.dropLink, styles.dropLinkButtons, styles.dropCancel]} onClick={this.handleCloseClick}>Cancel</a>
+                                <a
+                                    href='#'
+                                    key='cancel'
+                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
+                                    onClick={this.handleCloseClick}>Cancel</a>
                             </div>
                         </div>
                     </div>
