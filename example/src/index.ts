@@ -1,6 +1,4 @@
 import * as Allihoopa from 'allihoopa';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 declare const ALLIHOOPA_APP_KEY: string;
 declare const ALLIHOOPA_APP_SECRET: string;
@@ -25,19 +23,10 @@ authButton.addEventListener('click', () => {
 });
 
 dropButton.addEventListener('click', () => {
-    const element = document.getElementById('example');
+    Allihoopa.drop((success) => {
+        const p = document.createElement('pre');
+        p.innerText = JSON.stringify(success ? 'Drop successful' : 'Drop cancelled');
 
-    if (!element) {
-        throw new Error('Could not find element');
-    }
-
-    const mixStems = {
-        type: Allihoopa.StemType.wav,
-        url: 'https://adsgf'
-    };
-
-    ReactDOM.render(
-        <Allihoopa.DropOverlay stems={mixStems} />,
-        element
-    );
+        document.body.appendChild(p);
+    });
 });
