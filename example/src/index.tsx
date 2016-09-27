@@ -31,8 +31,13 @@ dropButton.addEventListener('click', () => {
         throw new Error('Could not find element');
     }
 
+    const mixStems = {
+        type: Allihoopa.StemType.wav,
+        url: 'https://adsgf'
+    };
+
     ReactDOM.render(
-        <Allihoopa.DropOverlay compiler='TypeScript' framework='React' />,
+        <Allihoopa.DropOverlay stems={mixStems} />,
         element
     );
 });
