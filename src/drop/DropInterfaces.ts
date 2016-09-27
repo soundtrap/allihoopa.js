@@ -19,13 +19,9 @@ export interface Loop {
     endUs: number;
 }
 
-export enum UpperNumeral {One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen}
-
-export enum LowerNumeral {Two, Four, Eight, Sixteen}
-
 export interface TimeSignatureObject {
-    upper: UpperNumeral;
-    lower: LowerNumeral;
+    upper: number;
+    lower: number;
 }
 
 export interface TimeSignature {
