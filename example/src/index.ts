@@ -23,7 +23,11 @@ authButton.addEventListener('click', () => {
 });
 
 dropButton.addEventListener('click', () => {
-    Allihoopa.drop((success) => {
+    const mixStems: Allihoopa.MixStem = {
+        type: 'wav',
+        url: 'https://dd'
+    };
+    Allihoopa.drop({ stems: mixStems }, (success) => {
         const p = document.createElement('pre');
         p.innerText = JSON.stringify(success ? 'Drop successful' : 'Drop cancelled');
 

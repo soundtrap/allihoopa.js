@@ -2,11 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {DropOverlay} from './drop/DropOverlay';
-import {StemType} from './drop/DropInterfaces';
+import {DropOverlayProps} from './drop/DropInterfaces';
 
 export type DropCallback = (successful: boolean) => void;
 
-export function drop(callback: DropCallback) {
+export function drop(payload: DropOverlayProps, callback: DropCallback) {
     let element: HTMLElement;
     element = (<HTMLElement>document.getElementById('drop-container'));
     if (!element) {
@@ -21,13 +21,8 @@ export function drop(callback: DropCallback) {
         throw new Error('Could not find element');
     }
 
-    const mixStems = {
-        type: StemType.wav,
-        url: 'https://adsgfeee'
-    };
-
     ReactDOM.render(
-        React.createElement(DropOverlay, { stems: mixStems }),
+        React.createElement(DropOverlay, payload),
         element
     );
 

@@ -1,7 +1,5 @@
-export enum StemType {ogg, wav};
-
 export interface MixStem {
-    type: StemType;
+    type: string;
     url: string;
 }
 
