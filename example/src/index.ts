@@ -23,12 +23,19 @@ authButton.addEventListener('click', () => {
 });
 
 dropButton.addEventListener('click', () => {
-    const mixStems: Allihoopa.MixStem = {
+    const mixStems = {
         type: 'wav',
         url: 'http://localhost:8080/drop.wav'
     };
 
-    Allihoopa.drop({ stems: mixStems }, (success) => {
+    const metaData = {
+        lengthUs: 10000000,
+        tempo: {
+            fixed: 121
+        }
+    };
+
+    Allihoopa.drop({ stems: mixStems, musicalMetadata: metaData }, (success) => {
         const p = document.createElement('pre');
         p.innerText = JSON.stringify(success ? 'Drop successful' : 'Drop cancelled');
 
