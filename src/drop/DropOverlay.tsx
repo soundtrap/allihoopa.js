@@ -6,7 +6,7 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayProps, DropOverlayState} from './DropInterfaces';
+import {DropOverlayProps, DropOverlayState, MixStem} from './DropInterfaces';
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
     input: HTMLElement;
@@ -23,8 +23,34 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             listed: false,
             coverImageUrlWithFallback: '',
             hasCoverImage: false,
-            coverImageData: null
+            coverImageData: null,
+            mixStemsBlob: null
         };
+        this.readPiece(props.stems);
+    }
+
+    readPiece(mixStems: MixStem) {
+        if (mixStems.url.length > 0) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', mixStems.url);
+            xhr.responseType = 'blob';
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const mixStemsBlob = xhr.response;
+
+                    if (!mixStemsBlob || mixStemsBlob.size <= 0) {
+                        throw new Error('Could not load file.');
+                    }
+
+                    this.setState({
+                        mixStemsBlob: mixStemsBlob
+                    });
+                } else {
+                    throw new Error('Could not load file. Server responded with ' + xhr.status);
+                }
+            };
+            xhr.send();
+        }
     }
 
     openFileBrowser(e: any): void {

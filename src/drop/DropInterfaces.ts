@@ -48,4 +48,5 @@ export interface DropOverlayState {
     coverImageUrlWithFallback?: string;
     hasCoverImage?: boolean;
     coverImageData?: any;
+    mixStemsBlob?: any;
 }
