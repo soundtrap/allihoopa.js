@@ -7,7 +7,7 @@ import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
 import {DropOverlayProps, DropOverlayState, MixStem} from './DropInterfaces';
-import {graphQLQuery} from './../graphql';
+import {getPieceBytes, getUrls} from './../drop';
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
     input: HTMLElement;
@@ -28,53 +28,17 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             mixStemsBlob: null,
             uploadUrls: []
         };
-        this.readPiece(props.stems);
-        this.getUrls(2);
-    }
 
-    readPiece(mixStems: MixStem) {
-        if (mixStems.url.length > 0) {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', mixStems.url);
-            xhr.responseType = 'blob';
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    const mixStemsBlob = xhr.response;
-
-                    if (!mixStemsBlob || mixStemsBlob.size <= 0) {
-                        throw new Error('Could not load file.');
-                    }
-
-                    this.setState({
-                        mixStemsBlob: mixStemsBlob
-                    });
-                } else {
-                    throw new Error('Could not load file. Server responded with ' + xhr.status);
-                }
-            };
-            xhr.send();
-        }
-    }
-
-    getUrls(count: number) {
-        const query = {
-            query: `
-                mutation ($count: Int!) {
-                    uploadUrls(count: $count) {
-                        urls
-                    }
-                }`,
-            variables: { count: count }
-        };
-
-        const self = this;
-        graphQLQuery(query, (success, resp) => {
-            if (success) {
-                const urls: Array<string> = (JSON.parse(resp)).data.uploadUrls.urls;
-                self.setState({
-                    uploadUrls: urls
-                });
-            }
+        getPieceBytes(props.stems, (mixStemsBlob) => {
+            this.setState({
+                mixStemsBlob: mixStemsBlob
+            });
+        });
+        // Todo: check the real need for urls
+        getUrls(2, (urls) => {
+            this.setState({
+                uploadUrls: urls
+            });
         });
     }
 
