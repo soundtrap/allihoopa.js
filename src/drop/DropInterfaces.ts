@@ -49,4 +49,5 @@ export interface DropOverlayState {
     hasCoverImage?: boolean;
     coverImageData?: any;
     mixStemsBlob?: any;
+    uploadUrls?: Array<string>;
 }

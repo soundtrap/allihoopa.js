@@ -65,6 +65,6 @@ function saveAuthCookie(data: string) {
     setPersistentCookie(getAuthCookieName(), data);
 }
 
-function getAuthCookie(): string | null {
+export function getAuthCookie(): string | null {
     return getCookie(getAuthCookieName());
 }
