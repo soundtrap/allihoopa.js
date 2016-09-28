@@ -6,7 +6,7 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayProps, DropOverlayState, MixStem} from './DropInterfaces';
+import {DropOverlayProps, DropOverlayState, MixStem, File, FileType} from './DropInterfaces';
 import {getPieceBytes, getUrls} from './../drop';
 
 export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
@@ -24,22 +24,25 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
             listed: false,
             coverImageUrlWithFallback: '',
             hasCoverImage: false,
-            coverImageData: null,
-            mixStemsBlob: null,
-            uploadUrls: []
+            uploadFiles: []
         };
 
         getPieceBytes(props.stems, (mixStemsBlob) => {
-            this.setState({
-                mixStemsBlob: mixStemsBlob
-            });
+            let mixStem = { type: FileType.MixStem, data: mixStemsBlob };
+            this.pushFile(mixStem);
         });
-        // Todo: check the real need for urls
-        getUrls(2, (urls) => {
-            this.setState({
-                uploadUrls: urls
-            });
-        });
+    }
+
+    pushFile(file: File) {
+        if (!this.state.uploadFiles || this.state.uploadFiles.length === 0) {
+            let fileArray = new Array<File>();
+            fileArray.push(file);
+            this.setState({ uploadFiles: fileArray });
+        } else {
+            let fileArray = this.state.uploadFiles.slice();
+            fileArray.push(file);
+            this.setState({ uploadFiles: fileArray });
+        }
     }
 
     openFileBrowser(e: any): void {
@@ -74,15 +77,25 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
         const binaryReader  = new FileReader();
 
         binaryReader.onloadend = () => {
-            this.setState({
-                coverImageData: binaryReader.result.match(/,(.*)$/)[1]
-            });
+            let coverImage = { type: FileType.CoverImage, data: binaryReader.result.match(/,(.*)$/)[1] };
+            this.pushFile(coverImage);
         };
 
         binaryReader.readAsDataURL(image);
     }
 
     handleDropClick(e: any): void {
+        if (!!this.state.uploadFiles && this.state.uploadFiles.length > 0) {
+            getUrls(this.state.uploadFiles.length, (urls) => {
+                if (!!this.state.uploadFiles && this.state.uploadFiles.length > 0) {
+                    let fileArray = this.state.uploadFiles.slice();
+                    fileArray.forEach(function(entry, index) {
+                        entry.url = urls[index];
+                    });
+                    this.setState({ uploadFiles: fileArray });
+                }
+            });
+        }
     }
 
     handleCloseClick(e: any): void {

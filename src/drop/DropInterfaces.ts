@@ -39,6 +39,18 @@ export interface DropOverlayProps {
     musicalMetadata?: MusicalMetadata;
 }
 
+export enum FileType {
+    CoverImage,
+    MixStem,
+    Preview
+}
+
+export interface File {
+    type: FileType;
+    url?: string;
+    data: any;
+}
+
 export interface DropOverlayState {
     title?: string;
     titleActive?: boolean;
@@ -47,7 +59,5 @@ export interface DropOverlayState {
     listed?: boolean;
     coverImageUrlWithFallback?: string;
     hasCoverImage?: boolean;
-    coverImageData?: any;
-    mixStemsBlob?: any;
-    uploadUrls?: Array<string>;
+    uploadFiles?: Array<File>;
 }
