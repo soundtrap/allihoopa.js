@@ -37,7 +37,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             });
         });
 
-        if (props.presentation.preview[0]) {
+        if (!!props.presentation.preview) {
             getFileAsBytes(props.presentation.preview[0].url, (mixStemBlob) => {
                 uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
                     this.piece.presentation.preview[0] = resource;
@@ -67,43 +67,53 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         const reader = new FileReader();
 
         reader.onloadend = () => {
-            this.setState({
-                coverImageUrlWithFallback: reader.result,
-                hasCoverImage: true
-            });
+            if (reader.result.indexOf('image/png') !== -1) {
+                this.setState({
+                    coverImageUrlWithFallback: reader.result,
+                    hasCoverImage: true
+                });
+
+                if (!!this.piece.presentation.coverImage) {
+                    this.piece.presentation.coverImage[0].fileType = 'png';
+                } else {
+                    this.piece.presentation.coverImage = [{fileType: 'png', url: ''}];
+                }
+
+                // then load the data
+                const binaryReader  = new FileReader();
+
+                binaryReader.onloadend = () => {
+                    this.setState({
+                        coverImageData: binaryReader.result.match(/,(.*)$/)[1]
+                    });
+                };
+
+                binaryReader.readAsDataURL(image);
+            } else {
+                throw new Error('Only supported filetype is PNG');
+            }
         };
 
         reader.readAsDataURL(image);
-
-        const binaryReader  = new FileReader();
-
-        binaryReader.onloadend = () => {
-            this.setState({
-                coverImageData: binaryReader.result.match(/,(.*)$/)[1]
-            });
-            this.piece.presentation.coverImage[0].fileType = 'image/png';
-        };
-
-        binaryReader.readAsDataURL(image);
     }
 
     handleDropClick(e: any): void {
         // Todo: validation
         // Todo: handle different cases if the cover came from props, is default or was uploaded
-        /*uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
-            this.piece.presentation.coverImage[0] = resource;*/
-        this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
-        this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
-        this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
+        uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
+            this.piece.presentation.coverImage[0] = resource;
+            this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
+            this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
+            this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
 
-        dropPiece(this.piece, (dropPiece: DropPiece) => {
-            if (dropPiece) {
-                this.setState({
-                    dropPiece: dropPiece
-                });
-            }
+            dropPiece(this.piece, (dropPiece: DropPiece) => {
+                if (dropPiece) {
+                    this.setState({
+                        dropPiece: dropPiece
+                    });
+                }
+            });
         });
-        // });
     }
 
     handleCloseClick(e: any): void {
