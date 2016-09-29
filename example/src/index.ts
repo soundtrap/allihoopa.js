@@ -23,19 +23,29 @@ authButton.addEventListener('click', () => {
 });
 
 dropButton.addEventListener('click', () => {
-    const mixStems = {
-        type: 'wav',
-        url: 'http://localhost:8080/drop.wav'
-    };
-
-    const metaData = {
-        lengthUs: 10000000,
-        tempo: {
-            fixed: 121
+    const piece = {
+        stems: {
+            mixStem: [{
+                fileType: 'wav',
+                url: 'http://localhost:8080/drop.wav'
+            }]
+        },
+        presentation: {
+            title: 'A test piece',
+            preview: [{
+                fileType: 'wav',
+                url: 'http://localhost:8080/drop.wav'
+            }]
+        },
+        musicalMetadata: {
+            lengthUs: 10000000,
+            tempo: {
+                fixed: 121
+            }
         }
     };
 
-    Allihoopa.drop({ stems: mixStems, musicalMetadata: metaData }, (success) => {
+    Allihoopa.drop(piece, (success) => {
         const p = document.createElement('pre');
         p.innerText = JSON.stringify(success ? 'Drop successful' : 'Drop cancelled');
 

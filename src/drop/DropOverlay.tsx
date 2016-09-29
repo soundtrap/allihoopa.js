@@ -6,43 +6,41 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayProps, DropOverlayState, MixStem, File, FileType} from './DropInterfaces';
-import {getPieceBytes, getUrls} from './../drop';
+import {DropOverlayState, PieceInput} from './DropInterfaces';
+import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
-export class DropOverlay extends React.Component<DropOverlayProps, DropOverlayState> {
+export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
     input: HTMLElement;
-
+    piece: PieceInput;
     public state: DropOverlayState;
 
-    constructor(props: DropOverlayProps) {
+    constructor(props: PieceInput) {
         super(props);
+
         this.state = {
-            title: '',
+            title: props.presentation.title,
             titleActive: false,
-            description: '',
+            description: props.presentation.description,
             descriptionActive: false,
-            listed: false,
+            isListed: false,
             coverImageUrlWithFallback: '',
             hasCoverImage: false,
-            uploadFiles: []
+            coverImageData: ''
         };
 
-        getPieceBytes(props.stems, (mixStemsBlob) => {
-            let mixStem = { type: FileType.MixStem, data: mixStemsBlob };
-            this.pushFile(mixStem);
-        });
-    }
+        this.piece = this.props;
 
-    pushFile(file: File) {
-        if (!this.state.uploadFiles || this.state.uploadFiles.length === 0) {
-            let fileArray = new Array<File>();
-            fileArray.push(file);
-            this.setState({ uploadFiles: fileArray });
-        } else {
-            let fileArray = this.state.uploadFiles.slice();
-            fileArray.push(file);
-            this.setState({ uploadFiles: fileArray });
-        }
+        // Todo: assumes only one stem
+        getFileAsBytes(props.stems.mixStem[0].url, (mixStemBlob) => {
+            uploadResource(props.stems.mixStem[0], mixStemBlob, (resource) => {
+                this.piece.stems.mixStem[0] = resource;
+            });
+            // Todo: now we place the mixStem to preview too
+            uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
+                this.piece.presentation.preview[0] = resource;
+            });
+        });
+
     }
 
     openFileBrowser(e: any): void {
@@ -77,25 +75,29 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
         const binaryReader  = new FileReader();
 
         binaryReader.onloadend = () => {
-            let coverImage = { type: FileType.CoverImage, data: binaryReader.result.match(/,(.*)$/)[1] };
-            this.pushFile(coverImage);
+            this.setState({
+                coverImageData: binaryReader.result.match(/,(.*)$/)[1]
+            });
+            this.piece.presentation.coverImage[0].fileType = 'image/png';
         };
 
         binaryReader.readAsDataURL(image);
     }
 
     handleDropClick(e: any): void {
-        if (!!this.state.uploadFiles && this.state.uploadFiles.length > 0) {
-            getUrls(this.state.uploadFiles.length, (urls) => {
-                if (!!this.state.uploadFiles && this.state.uploadFiles.length > 0) {
-                    let fileArray = this.state.uploadFiles.slice();
-                    fileArray.forEach(function(entry, index) {
-                        entry.url = urls[index];
-                    });
-                    this.setState({ uploadFiles: fileArray });
-                }
-            });
-        }
+        // Todo: validation
+        // Todo: handle different cases if the cover came from props, is default or was uploaded
+        /*uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
+            this.piece.presentation.coverImage[0] = resource;*/
+        this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
+        this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
+        this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
+
+        dropPiece(this.piece, (piece) => {
+            if (piece) {
+            }
+        });
+        // });
     }
 
     handleCloseClick(e: any): void {
@@ -146,7 +148,6 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                             }}
                                     ></div> :
                                     <DefaultCover />
-
                                 }
                             </div>
                             <a
@@ -185,7 +186,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         maxLength={50}
                                         onChange={(e) => this.setState({title: (e.target as HTMLInputElement).value})}
                                         onFocus={() => this.setState({titleActive: true})}
-                                        onBlur={() => this.setState({titleActive: false})} />
+                                        onBlur={() => this.setState({titleActive: false})}
+                                        value={this.state.title} />
                                 </p>
                             </div>
 
@@ -210,7 +212,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                         maxLength={140}
                                         onChange={(e) => this.setState({description: (e.target as HTMLInputElement).value})}
                                         onFocus={() => this.setState({descriptionActive: true})}
-                                        onBlur={() => this.setState({descriptionActive: false})} />
+                                        onBlur={() => this.setState({descriptionActive: false})}
+                                        value={this.state.description} />
                                 </p>
                             </div>
                             <div>
@@ -219,8 +222,8 @@ export class DropOverlay extends React.Component<DropOverlayProps, DropOverlaySt
                                     <Toggle
                                         enabledTitle='Listed'
                                         disabledTitle='Unlisted'
-                                        value={!!this.state.listed}
-                                        onChange={() => this.setState({listed: !this.state.listed})}
+                                        value={!!this.state.isListed}
+                                        onChange={() => this.setState({isListed: !this.state.isListed})}
                                     />
                                 </p>
                             </div>
