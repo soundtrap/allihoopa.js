@@ -37,6 +37,13 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             });
         });
 
+        if (props.presentation.preview[0]) {
+            getFileAsBytes(props.presentation.preview[0].url, (mixStemBlob) => {
+                uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
+                    this.piece.presentation.preview[0] = resource;
+                });
+            });
+        }
     }
 
     openFileBrowser(e: any): void {
