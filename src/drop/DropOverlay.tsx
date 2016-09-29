@@ -6,7 +6,7 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayState, PieceInput} from './DropInterfaces';
+import {DropOverlayState, PieceInput, DropPiece} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
 export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
@@ -25,19 +25,15 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             isListed: false,
             coverImageUrlWithFallback: '',
             hasCoverImage: false,
-            coverImageData: ''
+            coverImageData: '',
+            dropPiece: {uuid: '', url: '', shortId: ''}
         };
 
         this.piece = this.props;
 
-        // Todo: assumes only one stem
         getFileAsBytes(props.stems.mixStem[0].url, (mixStemBlob) => {
             uploadResource(props.stems.mixStem[0], mixStemBlob, (resource) => {
                 this.piece.stems.mixStem[0] = resource;
-            });
-            // Todo: now we place the mixStem to preview too
-            uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
-                this.piece.presentation.preview[0] = resource;
             });
         });
 
@@ -93,8 +89,11 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
         this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
 
-        dropPiece(this.piece, (piece) => {
-            if (piece) {
+        dropPiece(this.piece, (dropPiece: DropPiece) => {
+            if (dropPiece) {
+                this.setState({
+                    dropPiece: dropPiece
+                });
             }
         });
         // });

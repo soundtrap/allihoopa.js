@@ -1,4 +1,4 @@
-import {PieceInput, ExternalResourceInput, File} from './DropInterfaces';
+import {DropPiece, PieceInput, ExternalResourceInput, File} from './DropInterfaces';
 
 import {graphQLQuery} from './../graphql';
 
@@ -98,14 +98,18 @@ export function uploadFile(url: string, data: any, callback: UploadFileCallback)
     xhr.send(data);
 }
 
-export type DropPieceCallback = (piece: PieceInput) => void;
+export type DropPieceCallback = (piece: DropPiece) => void;
 
 export function dropPiece(piece: PieceInput, callback: DropPieceCallback) {
     const query = {
         query: `
             mutation ($piece: PieceInput!) {
                 dropPiece(piece: $piece) {
-                    piece { uuid }
+                    piece { 
+                        uuid,
+                        shortId,
+                        url 
+                    }
                 }
             }`,
         variables: { piece: piece }
@@ -113,7 +117,7 @@ export function dropPiece(piece: PieceInput, callback: DropPieceCallback) {
 
     graphQLQuery(query, (success, resp) => {
         if (success) {
-            const piece: PieceInput = (JSON.parse(resp)).data.dropPiece.piece;
+            const piece: DropPiece = (JSON.parse(resp)).data.dropPiece.piece;
 
             callback(piece);
         }

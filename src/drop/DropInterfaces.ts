@@ -6,6 +6,12 @@ export interface PieceInput {
     musicalMetadata: MusicalMetadataInput;
 }
 
+export interface DropPiece {
+    uuid: string;
+    url: string;
+    shortId: string;
+}
+
 export interface StemsInput {
     mixStem: Array<ExternalResourceInput>;
 }
@@ -62,7 +68,7 @@ export interface DropOverlayState {
     coverImageUrlWithFallback?: string;
     hasCoverImage?: boolean;
     coverImageData?: string;
-    piece?: PieceInput;
+    dropPiece?: DropPiece;
 }
 
 export interface File {
