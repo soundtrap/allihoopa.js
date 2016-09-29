@@ -139,7 +139,15 @@ const styles = {
         float: 'right',
         marginTop: '3px',
         textTransform: 'uppercase',
-        fontSize: '14px'
+        fontSize: '14px',
+        border: 0,
+        background: 'transparent',
+        ':hover': {
+            cursor: 'pointer'
+        },
+        ':disabled': {
+            color: dustygray
+        }
     },
     dropCancel: {
         marginRight: '26px'

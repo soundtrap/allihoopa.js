@@ -99,13 +99,25 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
 
     handleDropClick(e: any): void {
         // Todo: validation
-        // Todo: handle different cases if the cover came from props, is default or was uploaded
-        uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
-            this.piece.presentation.coverImage[0] = resource;
-            this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
-            this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
-            this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
+        this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
+        this.piece.presentation.description = ( !!this.state.description ? this.state.description : this.piece.presentation.description );
+        this.piece.presentation.isListed = ( !!this.state.isListed ? true : false );
 
+        if (!!this.piece.presentation.coverImage) {
+            // Todo: handle different cases if the cover came from props, is default or was uploaded
+            uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
+                this.piece.presentation.coverImage[0] = resource;
+                // Todo: Check that mixStems and preview have also succeeded before dropping
+                dropPiece(this.piece, (dropPiece: DropPiece) => {
+                    if (dropPiece) {
+                        this.setState({
+                            dropPiece: dropPiece
+                        });
+                    }
+                });
+            });
+        } else {
+            // Todo: Check that mixStems and preview have also succeeded before dropping
             dropPiece(this.piece, (dropPiece: DropPiece) => {
                 if (dropPiece) {
                     this.setState({
@@ -113,7 +125,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                     });
                 }
             });
-        });
+        }
     }
 
     handleCloseClick(e: any): void {
@@ -244,17 +256,18 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                                 </p>
                             </div>
                             <div style={[styles.dropPieceButtons]}>
-                                <a
+                                <button
                                     href='#'
                                     key='drop'
                                     style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
-                                    onClick={(e) => this.handleDropClick(e)}>Drop</a>
+                                    onClick={(e) => this.handleDropClick(e)}
+                                    disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
 
-                                <a
+                                <button
                                     href='#'
                                     key='cancel'
                                     style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
-                                    onClick={(e) => this.handleCloseClick(e)}>Cancel</a>
+                                    onClick={(e) => this.handleCloseClick(e)}>Cancel</button>
                             </div>
                         </div>
                     </div>
