@@ -75,3 +75,7 @@ export interface File {
     url: string;
     data: any;
 }
+
+export interface UploadStatus {
+    [key: string]: boolean;
+}

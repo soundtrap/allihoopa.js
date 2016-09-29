@@ -6,12 +6,13 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayState, PieceInput, DropPiece} from './DropInterfaces';
+import {DropOverlayState, PieceInput, DropPiece, UploadStatus} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
 export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
     input: HTMLElement;
     piece: PieceInput;
+    uploadStatus: UploadStatus = {};
     public state: DropOverlayState;
 
     constructor(props: PieceInput) {
@@ -31,16 +32,22 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
 
         this.piece = this.props;
 
+        this.uploadStatus['mixStem'] = false;
+
         getFileAsBytes(props.stems.mixStem[0].url, (mixStemBlob) => {
             uploadResource(props.stems.mixStem[0], mixStemBlob, (resource) => {
                 this.piece.stems.mixStem[0] = resource;
+                this.uploadStatus['mixStem'] = true;
             });
         });
 
         if (!!props.presentation.preview) {
+            this.uploadStatus['preview'] = false;
+
             getFileAsBytes(props.presentation.preview[0].url, (mixStemBlob) => {
                 uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
                     this.piece.presentation.preview[0] = resource;
+                    this.uploadStatus['preview'] = true;
                 });
             });
         }
@@ -97,6 +104,27 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         reader.readAsDataURL(image);
     }
 
+    waitUploadees(callback: any) {
+        let isReady: boolean = true;
+
+        for (const key in this.uploadStatus) {
+            const value = this.uploadStatus[key];
+            // found unfinished upload
+            if (!value) {
+                isReady = false;
+            }
+        }
+
+        if (!isReady) {
+            const self = this;
+            setTimeout(function() {
+                self.waitUploadees(callback);
+            }, 1000);
+        } else {
+            callback();
+        }
+    }
+
     handleDropClick(e: any): void {
         // Todo: validation
         this.piece.presentation.title = ( !!this.state.title ? this.state.title : this.piece.presentation.title );
@@ -105,19 +133,14 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
 
         if (!!this.piece.presentation.coverImage) {
             // Todo: handle different cases if the cover came from props, is default or was uploaded
+            this.uploadStatus['coverImage'] = false;
             uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
                 this.piece.presentation.coverImage[0] = resource;
-                // Todo: Check that mixStems and preview have also succeeded before dropping
-                dropPiece(this.piece, (dropPiece: DropPiece) => {
-                    if (dropPiece) {
-                        this.setState({
-                            dropPiece: dropPiece
-                        });
-                    }
-                });
+                this.uploadStatus['coverImage'] = true;
             });
-        } else {
-            // Todo: Check that mixStems and preview have also succeeded before dropping
+        }
+
+        this.waitUploadees(() => {
             dropPiece(this.piece, (dropPiece: DropPiece) => {
                 if (dropPiece) {
                     this.setState({
@@ -125,7 +148,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                     });
                 }
             });
-        }
+        });
     }
 
     handleCloseClick(e: any): void {
