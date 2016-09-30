@@ -77,6 +77,8 @@ export interface DropOverlayState {
     coverImageData?: string;
     dropPiece?: DropPiece;
     status?: Status;
+    uploadProgress?: number;
+    errorMessage?: string;
 }
 
 export interface File {

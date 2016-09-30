@@ -26,18 +26,6 @@ const styles = {
             maxWidth: '100%'
         }
     },
-    dropWaitingView: {
-        width: '100%',
-        height: '100%'
-    },
-    dropCompletedView : {
-        width: '100%',
-        height: '100%'
-    },
-    dropErrorView: {
-        width: '100%',
-        height: '100%'
-    },
     centeredContainer: {
         display: 'flex',
         flexDirection: 'row',

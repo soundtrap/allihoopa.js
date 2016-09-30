@@ -5,6 +5,10 @@ const Frame = require('react-frame-component');
 
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
+import WaitingView from './WaitingView';
+import CompletedView from './CompletedView';
+import ErrorView from './ErrorView';
+
 import styles from './DropOverlayStyles';
 import {DropOverlayState, PieceInput, DropPiece, UploadStatus, Status} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
@@ -28,7 +32,9 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             hasCoverImage: false,
             coverImageData: '',
             dropPiece: {uuid: '', url: '', shortId: ''},
-            status: Status.MAIN
+            status: Status.MAIN,
+            uploadProgress: 0,
+            errorMessage: ''
         };
 
         this.piece = this.props;
@@ -303,17 +309,17 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                                 </div>
                             </div>
                             { this.state.status === Status.WAITING ?
-                                <div style={[styles.dropWaitingView, styles.centeredContainer]}>
-                                    Waiting...
-                                </div> : null }
+                                <WaitingView
+                                    progress={this.state.uploadProgress}
+                                /> : null }
                             { this.state.status === Status.COMPLETED ?
-                                <div style={[styles.dropCompletedView, styles.centeredContainer]}>
-                                    Completed!
-                                </div> : null }
+                                <CompletedView
+                                    dropPiece={this.state.dropPiece}
+                                /> : null }
                             { this.state.status === Status.ERROR ?
-                            <div style={[styles.dropErrorView, styles.centeredContainer]}>
-                                Error :(
-                            </div> : null }
+                                <ErrorView
+                                    errorMessage={this.state.errorMessage}
+                                /> : null }
                         </div>
                     </div>
                 </StyleRoot>
