@@ -329,14 +329,12 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                                 </div>
                                 <div style={[styles.dropPieceButtons]}>
                                     <button
-                                        href='#'
                                         key='drop'
                                         style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
                                         onClick={(e) => this.handleDropClick(e)}
                                         disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
 
                                     <button
-                                        href='#'
                                         key='cancel'
                                         style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
                                         onClick={(e) => this.handleCloseClick(e)}>Cancel</button>

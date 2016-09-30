@@ -9,13 +9,24 @@ export interface CompletedProps {
 
 @Radium
 export default class CompletedView extends React.Component<CompletedProps, {}> {
+    handleOpenPiece(e: any): void {
+        if (!!this.props.dropPiece && !! this.props.dropPiece.url) {
+            window.open(this.props.dropPiece.url);
+        }
+    }
+
     render() {
         return (
             <div style={[styles.completedView, styles.centeredContainer]}>
                 <div style={[styles.completedContainer]}>
                     <p style={[styles.completedTitle]}>Completed!</p>
                     { !!this.props.dropPiece && !! this.props.dropPiece.url ?
-                        <a href={this.props.dropPiece.url}>Here's your new piece!</a>
+                        <button
+                            style={[styles.pieceButton]}
+                            onClick={(e) => this.handleOpenPiece(e)}>
+                        >
+                            Here's your new piece!
+                        </button>
                         :
                         null
                     }
@@ -24,6 +35,8 @@ export default class CompletedView extends React.Component<CompletedProps, {}> {
         );
     }
 }
+
+const vibrantGreen = '#29DB29';
 
 const styles = {
     completedView: {
@@ -44,5 +57,14 @@ const styles = {
         lineHeight: 1.2,
         marginTop: '32px',
         marginBottom: '16px'
+    },
+    pieceButton: {
+        fontSize: '18px',
+        border: 0,
+        padding: '16px 20px',
+        background: vibrantGreen,
+        ':hover': {
+            cursor: 'pointer'
+        }
     }
 };
