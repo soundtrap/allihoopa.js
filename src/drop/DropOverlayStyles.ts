@@ -1,9 +1,6 @@
-const turquoise = '#23a6bd';
-const masala = '#4A4A4A';
-const dustygray = '#9B9B9B';
-const linkHover = '#63a2ac';
+import * as consts from './constants';
 
-const styles = {
+export const styles = {
     dropOverlay: {
         background: '#fff',
         position: 'absolute',
@@ -26,12 +23,6 @@ const styles = {
             maxWidth: '100%'
         }
     },
-    centeredContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     dropHeading: {
         fontSize: '22px',
         lineHeight: 1.2,
@@ -53,16 +44,16 @@ const styles = {
         height: '100%'
     },
     colorLink: {
-        color: turquoise,
+        color: consts.TURQUOISE,
         textDecoration: 'none',
         ':visited': {
-            color: turquoise
+            color: consts.TURQUOISE
         },
         ':hover': {
-            color: linkHover
+            color: consts.LINK_HOVER
         },
         ':active': {
-            color: linkHover
+            color: consts.LINK_HOVER
         }
     },
     dropCoverImageChange: {
@@ -82,11 +73,11 @@ const styles = {
         position: 'relative'
     },
     dropControlLabel: {
-        color: dustygray,
+        color: consts.DUSTY_GRAY,
         fontSize: '14px'
     },
     active: {
-        color: turquoise
+        color: consts.TURQUOISE
     },
     dropPieceTitleInput: {
         padding: '12px'
@@ -96,14 +87,14 @@ const styles = {
         padding: '14px',
         borderRadius: 0,
         fontSize: '16px',
-        color: masala,
+        color: consts.MASALA,
         border: '1px solid #CCC',
         width: 'calc(100% - 26px)',
         WebkitAppearance: 'none',
         ':focus': {
             boxShadow: 'none',
             outline: 'none',
-            border: `1px solid ${turquoise}`,
+            border: `1px solid ${consts.TURQUOISE}`,
             background: 'rgba(74, 74, 74, 0.03)'
         }
     },
@@ -142,13 +133,11 @@ const styles = {
         marginTop: '3px',
         textTransform: 'uppercase',
         fontSize: '14px',
-        border: 0,
-        background: 'transparent',
         ':hover': {
             cursor: 'pointer'
         },
         ':disabled': {
-            color: dustygray
+            color: consts.DUSTY_GRAY
         }
     },
     dropCancel: {
@@ -161,5 +150,3 @@ const styles = {
         }
     }
 };
-
-export default styles;

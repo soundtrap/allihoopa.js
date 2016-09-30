@@ -13,20 +13,24 @@ export interface DropPiece {
 }
 
 export interface StemsInput {
-    mixStem: Array<ExternalResourceInput>;
+    mixStem: AudioResourceInput;
 }
 
-export interface ExternalResourceInput {
-    fileType: string;
-    url: string;
+export interface AudioResourceInput {
+    wav?: string;
+    ogg?: string;
+}
+
+export interface ImageResourceInput {
+    png: string;
 }
 
 export interface PresentationDataInput {
     title: string;
     description?: string;
-    isListed: boolean;
-    preview: Array<ExternalResourceInput>;
-    coverImage: Array<ExternalResourceInput>;
+    isListed?: boolean;
+    preview: AudioResourceInput;
+    coverImage?: ImageResourceInput;
 }
 
 export interface AttributionDataInput {

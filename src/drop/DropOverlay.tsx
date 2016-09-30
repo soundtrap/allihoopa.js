@@ -9,7 +9,8 @@ import WaitingView from './WaitingView';
 import CompletedView from './CompletedView';
 import ErrorView from './ErrorView';
 
-import styles from './DropOverlayStyles';
+import {styles} from './DropOverlayStyles';
+import {commonStyles} from './commonStyles';
 import {DropOverlayState, PieceInput, DropPiece, UploadStatus, UploadProgress, Status} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
@@ -38,41 +39,54 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             errorMessage: ''
         };
 
+        // Todo: valide input props
         this.piece = this.props;
 
         this.uploadStatus['mixStem'] = false;
 
-        getFileAsBytes(props.stems.mixStem[0].url, (mixStemBlob) => {
+        // upload mixStem
+        if (!!props.stems.mixStem.wav) {
+            this.initiateFileUpload(props.stems.mixStem.wav, (targetUrl: string) => {
+                this.piece.stems.mixStem.wav = targetUrl;
+                this.uploadStatus['mixStem'] = true;
+            });
+        } else if (!!props.stems.mixStem.ogg) {
+            this.initiateFileUpload(props.stems.mixStem.ogg, (targetUrl: string) => {
+                this.piece.stems.mixStem.ogg = targetUrl;
+                this.uploadStatus['mixStem'] = true;
+            });
+        }
+        // upload presentation
+        if (!!props.presentation.preview) {
+            this.uploadStatus['preview'] = false;
+
+            if (!!props.presentation.preview.wav) {
+                this.initiateFileUpload(props.presentation.preview.wav, (targetUrl: string) => {
+                    this.piece.presentation.preview.wav = targetUrl;
+                    this.uploadStatus['preview'] = true;
+                });
+            } else if (!!props.presentation.preview.ogg) {
+                this.initiateFileUpload(props.presentation.preview.ogg, (targetUrl: string) => {
+                    this.piece.presentation.preview.ogg = targetUrl;
+                    this.uploadStatus['preview'] = true;
+                });
+            }
+        }
+    }
+
+    initiateFileUpload(url: string, callback: any) {
+        getFileAsBytes(url, (data) => {
             uploadResource(
-                props.stems.mixStem[0],
-                mixStemBlob,
-                (resource) => {
-                    this.piece.stems.mixStem[0] = resource;
+                data,
+                (targetUrl: string) => {
+                    callback(targetUrl);
                     this.uploadStatus['mixStem'] = true;
                 },
-                (progress) => {
+                (progress: number) => {
                     this.uploadProgress['mixStem'] = progress;
                 }
             );
         });
-
-        if (!!props.presentation.preview) {
-            this.uploadStatus['preview'] = false;
-
-            getFileAsBytes(props.presentation.preview[0].url, (mixStemBlob) => {
-                uploadResource(
-                    props.presentation.preview[0],
-                    mixStemBlob,
-                    (resource) => {
-                        this.piece.presentation.preview[0] = resource;
-                        this.uploadStatus['preview'] = true;
-                    },
-                    (progress) => {
-                        this.uploadProgress['preview'] = progress;
-                    }
-                );
-            });
-        }
     }
 
     openFileBrowser(e: any): void {
@@ -101,12 +115,6 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                     coverImageUrlWithFallback: reader.result,
                     hasCoverImage: true
                 });
-
-                if (!!this.piece.presentation.coverImage) {
-                    this.piece.presentation.coverImage[0].fileType = 'png';
-                } else {
-                    this.piece.presentation.coverImage = [{fileType: 'png', url: ''}];
-                }
 
                 // then load the data
                 const binaryReader  = new FileReader();
@@ -176,10 +184,9 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             // Todo: handle different cases if the cover came from props, is default or was uploaded
             this.uploadStatus['coverImage'] = false;
             uploadResource(
-                this.piece.presentation.coverImage[0],
                 this.state.coverImageData,
-                (resource) => {
-                    this.piece.presentation.coverImage[0] = resource;
+                (targetUrl: string) => {
+                    this.piece.presentation.coverImage = { png: targetUrl };
                     this.uploadStatus['coverImage'] = true;
                 },
                 (progress) => {
@@ -199,7 +206,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         });
     }
 
-    handleCloseClick(e: any): void {
+    handleCloseClick(): void {
         const iframe = document.getElementById('dropIframe');
 
         if (!iframe) {
@@ -233,7 +240,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         return (
             <Frame id='dropIframe' style={iframeStyles}>
                 <StyleRoot>
-                    <div style={[styles.dropOverlay, styles.centeredContainer]}>
+                    <div style={[styles.dropOverlay, commonStyles.centeredContainer]}>
                         <div style={[styles.dropContainer]}>
                             <div style={{display: this.state.status === Status.MAIN ? 'block' : 'none'}}>
                                 <h3 style={[styles.dropHeading]}>Drop to Allihoopa</h3>
@@ -330,14 +337,14 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                                 <div style={[styles.dropPieceButtons]}>
                                     <button
                                         key='drop'
-                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
+                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop, commonStyles.resetButton]}
                                         onClick={(e) => this.handleDropClick(e)}
                                         disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
 
                                     <button
                                         key='cancel'
-                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
-                                        onClick={(e) => this.handleCloseClick(e)}>Cancel</button>
+                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel, commonStyles.resetButton]}
+                                        onClick={() => this.handleCloseClick()}>Cancel</button>
                                 </div>
                             </div>
                             { this.state.status === Status.WAITING ?
@@ -347,6 +354,7 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
                             { this.state.status === Status.COMPLETED ?
                                 <CompletedView
                                     dropPiece={this.state.dropPiece}
+                                    closeFunction={this.handleCloseClick}
                                 /> : null }
                             { this.state.status === Status.ERROR ?
                                 <ErrorView

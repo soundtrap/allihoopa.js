@@ -25,17 +25,15 @@ authButton.addEventListener('click', () => {
 dropButton.addEventListener('click', () => {
     const piece = {
         stems: {
-            mixStem: [{
-                fileType: 'wav',
-                url: 'http://localhost:8080/drop.wav'
-            }]
+            mixStem: {
+                wav: 'http://localhost:8080/drop.wav'
+            }
         },
         presentation: {
             title: 'A test piece',
-            preview: [{
-                fileType: 'wav',
-                url: 'http://localhost:8080/drop.wav'
-            }]
+            preview: {
+                wav: 'http://localhost:8080/drop.wav'
+            }
         },
         musicalMetadata: {
             lengthUs: 10000000,

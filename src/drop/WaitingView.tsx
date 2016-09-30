@@ -1,6 +1,9 @@
 import * as React from 'react';
 import * as Radium from 'radium';
 
+import {commonStyles} from './commonStyles';
+import * as consts from './constants';
+
 export interface WaitingProps {
     progress: number | undefined;
 }
@@ -9,7 +12,7 @@ export interface WaitingProps {
 export default class WaitingView extends React.Component<WaitingProps, {}> {
     render() {
         return (
-            <div style={[styles.waitingView, styles.centeredContainer]}>
+            <div style={[styles.waitingView, commonStyles.centeredContainer]}>
                 <div style={[styles.waitingContainer]}>
                     <p style={[styles.waitingTitle]}>Uploading files</p>
                     <p style={[styles.waitingProgress]}>{this.props.progress}%</p>
@@ -19,18 +22,10 @@ export default class WaitingView extends React.Component<WaitingProps, {}> {
     }
 }
 
-const turquoise = '#23a6bd';
-
 const styles = {
     waitingView: {
         width: '100%',
         height: '100%'
-    },
-    centeredContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
     },
     waitingContainer: {
         textAlign: 'center'
@@ -46,6 +41,6 @@ const styles = {
         lineHeight: 1.2,
         marginTop: '32px',
         marginBottom: '16px',
-        color: turquoise
+        color: consts.TURQUOISE
     }
 };

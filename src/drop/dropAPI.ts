@@ -1,22 +1,17 @@
-import {DropPiece, PieceInput, ExternalResourceInput, File} from './DropInterfaces';
+import {DropPiece, PieceInput, File} from './DropInterfaces';
 
 import {graphQLQuery} from './../graphql';
 
-export type UploadResourceCallback = (resource: ExternalResourceInput) => void;
+export type UploadResourceCallback = (url: string) => void;
 
-export function uploadResource(resource: ExternalResourceInput, data: any, completionCallback: UploadResourceCallback, progressCallback: ProgressCallback) {
+export function uploadResource(data: any, completionCallback: UploadResourceCallback, progressCallback: ProgressCallback) {
     getUrls(1, (urls) => {
         uploadFile(
             urls[0],
             data,
             (successful: boolean) => {
                 if (successful) {
-                    const resourceObj: ExternalResourceInput = {
-                        fileType: resource.fileType,
-                        url: urls[0]
-                    };
-
-                    completionCallback(resourceObj);
+                    completionCallback(urls[0]);
                 }
             },
             (progress: number) => { progressCallback(progress); }
