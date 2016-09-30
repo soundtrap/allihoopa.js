@@ -6,7 +6,7 @@ const Frame = require('react-frame-component');
 import DefaultCover from './DefaultCover';
 import Toggle from './Toggle';
 import styles from './DropOverlayStyles';
-import {DropOverlayState, PieceInput, DropPiece, UploadStatus} from './DropInterfaces';
+import {DropOverlayState, PieceInput, DropPiece, UploadStatus, Status} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
 export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
@@ -27,7 +27,8 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             coverImageUrlWithFallback: '',
             hasCoverImage: false,
             coverImageData: '',
-            dropPiece: {uuid: '', url: '', shortId: ''}
+            dropPiece: {uuid: '', url: '', shortId: ''},
+            status: Status.MAIN
         };
 
         this.piece = this.props;
@@ -105,6 +106,10 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
     }
 
     waitUploadees(callback: any) {
+        this.setState({
+            status: Status.WAITING
+        });
+
         let isReady: boolean = true;
 
         for (const key in this.uploadStatus) {
@@ -122,6 +127,9 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
             }, 1000);
         } else {
             callback();
+            this.setState({
+                status: Status.COMPLETED
+            });
         }
     }
 
@@ -185,113 +193,127 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         return (
             <Frame id='dropIframe' style={iframeStyles}>
                 <StyleRoot>
-                    <div style={[styles.dropOverlay]}>
+                    <div style={[styles.dropOverlay, styles.centeredContainer]}>
                         <div style={[styles.dropContainer]}>
-                            <h3 style={[styles.dropHeading]}>Drop to Allihoopa</h3>
-                            <p style={[styles.dropCoverLabel]}>Cover Image</p>
-                            <div style={[styles.dropCoverContainer]}>
-                                { this.state.hasCoverImage ?
-                                    <div
-                                        style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                background: `url(${this.state.coverImageUrlWithFallback}) center center / cover no-repeat`,
-                                            }}
-                                    ></div> :
-                                    <DefaultCover />
-                                }
-                            </div>
-                            <a
-                                href='#'
-                                style={[styles.colorLink, styles.dropCoverImageChange]}
-                                onClick={(e) => this.openFileBrowser(e)}
-                                onTouchEnd={(e) => this.openFileBrowser(e)}>
-                                Upload
-                            </a>
-                            <input
-                                type='file'
-                                ref={(input) => { this.input = input; }}
-                                id='coverImageInput'
-                                style={[styles.dropCoverImageInput]}
-                                value=''
-                                onChange={(e) => this.handleImageInput(e)} />
-
-                            <div style={[styles.dropPieceTitle]}>
-                                <p>
-                                    <label
-                                        htmlFor='title'
-                                        style={[
-                                            styles.dropControlLabel,
-                                            this.state.titleActive && styles.active
-                                        ]}
-                                    >
-                                        Title
-                                    </label><br />
-                                    <input
-                                        style={[styles.dropPieceTitleInput, styles.dropFormControl]}
-                                        name='title'
-                                        id='title'
-                                        key='title'
-                                        placeholder='Song title'
-                                        size={50}
-                                        maxLength={50}
-                                        onChange={(e) => this.setState({title: (e.target as HTMLInputElement).value})}
-                                        onFocus={() => this.setState({titleActive: true})}
-                                        onBlur={() => this.setState({titleActive: false})}
-                                        value={this.state.title} />
-                                </p>
-                            </div>
-
-                            <div style={[styles.dropPieceDescription]}>
-                               <p>
-                                    <label
-                                        htmlFor='description'
-                                        style={[
-                                            styles.dropControlLabel,
-                                            this.state.descriptionActive && styles.active]}
-                                    >
-                                        Description
-                                    </label>
-                                    <span style={[styles.dropCharacterCount]}>{charactersLeft}</span>
-
-                                    <textarea
-                                        style={[styles.dropPieceDescriptionTextarea, styles.dropFormControl]}
-                                        name='description'
-                                        id='description'
-                                        key='description'
-                                        placeholder='Describe your piece'
-                                        maxLength={140}
-                                        onChange={(e) => this.setState({description: (e.target as HTMLInputElement).value})}
-                                        onFocus={() => this.setState({descriptionActive: true})}
-                                        onBlur={() => this.setState({descriptionActive: false})}
-                                        value={this.state.description} />
-                                </p>
-                            </div>
-                            <div>
-                                <p>
-                                    <span style={[styles.dropPieceVisibility]}>Visibility</span>
-                                    <Toggle
-                                        enabledTitle='Listed'
-                                        disabledTitle='Unlisted'
-                                        value={!!this.state.isListed}
-                                        onChange={() => this.setState({isListed: !this.state.isListed})}
-                                    />
-                                </p>
-                            </div>
-                            <div style={[styles.dropPieceButtons]}>
-                                <button
+                            <div style={{display: this.state.status === Status.MAIN ? 'block' : 'none'}}>
+                                <h3 style={[styles.dropHeading]}>Drop to Allihoopa</h3>
+                                <p style={[styles.dropCoverLabel]}>Cover Image</p>
+                                <div style={[styles.dropCoverContainer]}>
+                                    { this.state.hasCoverImage ?
+                                        <div
+                                            style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    background: `url(${this.state.coverImageUrlWithFallback}) center center / cover no-repeat`,
+                                                }}
+                                        ></div> :
+                                        <DefaultCover />
+                                    }
+                                </div>
+                                <a
                                     href='#'
-                                    key='drop'
-                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
-                                    onClick={(e) => this.handleDropClick(e)}
-                                    disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
+                                    style={[styles.colorLink, styles.dropCoverImageChange]}
+                                    onClick={(e) => this.openFileBrowser(e)}
+                                    onTouchEnd={(e) => this.openFileBrowser(e)}>
+                                    Upload
+                                </a>
+                                <input
+                                    type='file'
+                                    ref={(input) => { this.input = input; }}
+                                    id='coverImageInput'
+                                    style={[styles.dropCoverImageInput]}
+                                    value=''
+                                    onChange={(e) => this.handleImageInput(e)} />
 
-                                <button
-                                    href='#'
-                                    key='cancel'
-                                    style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
-                                    onClick={(e) => this.handleCloseClick(e)}>Cancel</button>
+                                <div style={[styles.dropPieceTitle]}>
+                                    <p>
+                                        <label
+                                            htmlFor='title'
+                                            style={[
+                                                styles.dropControlLabel,
+                                                this.state.titleActive && styles.active
+                                            ]}
+                                        >
+                                            Title
+                                        </label><br />
+                                        <input
+                                            style={[styles.dropPieceTitleInput, styles.dropFormControl]}
+                                            name='title'
+                                            id='title'
+                                            key='title'
+                                            placeholder='Song title'
+                                            size={50}
+                                            maxLength={50}
+                                            onChange={(e) => this.setState({title: (e.target as HTMLInputElement).value})}
+                                            onFocus={() => this.setState({titleActive: true})}
+                                            onBlur={() => this.setState({titleActive: false})}
+                                            value={this.state.title} />
+                                    </p>
+                                </div>
+
+                                <div style={[styles.dropPieceDescription]}>
+                                   <p>
+                                        <label
+                                            htmlFor='description'
+                                            style={[
+                                                styles.dropControlLabel,
+                                                this.state.descriptionActive && styles.active]}
+                                        >
+                                            Description
+                                        </label>
+                                        <span style={[styles.dropCharacterCount]}>{charactersLeft}</span>
+
+                                        <textarea
+                                            style={[styles.dropPieceDescriptionTextarea, styles.dropFormControl]}
+                                            name='description'
+                                            id='description'
+                                            key='description'
+                                            placeholder='Describe your piece'
+                                            maxLength={140}
+                                            onChange={(e) => this.setState({description: (e.target as HTMLInputElement).value})}
+                                            onFocus={() => this.setState({descriptionActive: true})}
+                                            onBlur={() => this.setState({descriptionActive: false})}
+                                            value={this.state.description} />
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        <span style={[styles.dropPieceVisibility]}>Visibility</span>
+                                        <Toggle
+                                            enabledTitle='Listed'
+                                            disabledTitle='Unlisted'
+                                            value={!!this.state.isListed}
+                                            onChange={() => this.setState({isListed: !this.state.isListed})}
+                                        />
+                                    </p>
+                                </div>
+                                <div style={[styles.dropPieceButtons]}>
+                                    <button
+                                        href='#'
+                                        key='drop'
+                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropDrop]}
+                                        onClick={(e) => this.handleDropClick(e)}
+                                        disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
+
+                                    <button
+                                        href='#'
+                                        key='cancel'
+                                        style={[styles.colorLink, styles.dropLinkButtons, styles.dropCancel]}
+                                        onClick={(e) => this.handleCloseClick(e)}>Cancel</button>
+                                </div>
                             </div>
+                            { this.state.status === Status.WAITING ?
+                                <div style={[styles.dropWaitingView, styles.centeredContainer]}>
+                                    Waiting...
+                                </div> : null }
+                            { this.state.status === Status.COMPLETED ?
+                                <div style={[styles.dropCompletedView, styles.centeredContainer]}>
+                                    Completed!
+                                </div> : null }
+                            { this.state.status === Status.ERROR ?
+                            <div style={[styles.dropErrorView, styles.centeredContainer]}>
+                                Error :(
+                            </div> : null }
                         </div>
                     </div>
                 </StyleRoot>

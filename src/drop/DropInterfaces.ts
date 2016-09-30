@@ -58,6 +58,13 @@ export interface TimeSignatureInput {
     lower: number;
 }
 
+export enum Status {
+    MAIN,
+    WAITING,
+    COMPLETED,
+    ERROR
+}
+
 // state 
 export interface DropOverlayState {
     title?: string;
@@ -69,6 +76,7 @@ export interface DropOverlayState {
     hasCoverImage?: boolean;
     coverImageData?: string;
     dropPiece?: DropPiece;
+    status?: Status;
 }
 
 export interface File {

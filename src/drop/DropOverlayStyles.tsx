@@ -10,11 +10,7 @@ const styles = {
         width: '100%',
         height: '100%',
         top: 0,
-        left: 0,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        left: 0
     },
     dropContainer: {
         background: '#fff',
@@ -29,6 +25,24 @@ const styles = {
         '@media (max-width: 768px)': {
             maxWidth: '100%'
         }
+    },
+    dropWaitingView: {
+        width: '100%',
+        height: '100%'
+    },
+    dropCompletedView : {
+        width: '100%',
+        height: '100%'
+    },
+    dropErrorView: {
+        width: '100%',
+        height: '100%'
+    },
+    centeredContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     dropHeading: {
         fontSize: '22px',
