@@ -117,14 +117,23 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         });
 
         let isReady: boolean = true;
+        let numOfUploads = 0;
+        let numOfCompletedUploads = 0;
 
         for (const key in this.uploadStatus) {
             const value = this.uploadStatus[key];
+            numOfUploads++;
             // found unfinished upload
             if (!value) {
                 isReady = false;
+            } else {
+                numOfCompletedUploads++;
             }
         }
+
+        this.setState({
+            uploadProgress: Math.round((numOfCompletedUploads / numOfUploads) * 100)
+        });
 
         if (!isReady) {
             const self = this;

@@ -9,15 +9,20 @@ export interface WaitingProps {
 export default class WaitingView extends React.Component<WaitingProps, {}> {
     render() {
         return (
-            <div style={[styles.dropWaitingView, styles.centeredContainer]}>
-                Waiting...
+            <div style={[styles.waitingView, styles.centeredContainer]}>
+                <div style={[styles.waitingContainer]}>
+                    <p style={[styles.waitingTitle]}>Uploading files</p>
+                    <p style={[styles.waitingProgress]}>{this.props.progress}%</p>
+                </div>
             </div>
         );
     }
 }
 
+const turquoise = '#23a6bd';
+
 const styles = {
-    dropWaitingView: {
+    waitingView: {
         width: '100%',
         height: '100%'
     },
@@ -27,4 +32,20 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center'
     },
+    waitingContainer: {
+        textAlign: 'center'
+    },
+    waitingTitle: {
+        fontSize: '22px',
+        lineHeight: 1.2,
+        marginTop: '32px',
+        marginBottom: '16px'
+    },
+    waitingProgress: {
+        fontSize: '22px',
+        lineHeight: 1.2,
+        marginTop: '32px',
+        marginBottom: '16px',
+        color: turquoise
+    }
 };
