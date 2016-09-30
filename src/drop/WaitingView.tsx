@@ -36,13 +36,13 @@ const styles = {
         textAlign: 'center'
     },
     waitingTitle: {
-        fontSize: '22px',
+        fontSize: '48px',
         lineHeight: 1.2,
         marginTop: '32px',
         marginBottom: '16px'
     },
     waitingProgress: {
-        fontSize: '22px',
+        fontSize: '48px',
         lineHeight: 1.2,
         marginTop: '32px',
         marginBottom: '16px',

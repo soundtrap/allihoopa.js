@@ -11,9 +11,9 @@ export interface CompletedProps {
 export default class CompletedView extends React.Component<CompletedProps, {}> {
     render() {
         return (
-            <div style={[styles.dropCompletedView, styles.centeredContainer]}>
-                <div>
-                    <p>Completed!</p>
+            <div style={[styles.completedView, styles.centeredContainer]}>
+                <div style={[styles.completedContainer]}>
+                    <p style={[styles.completedTitle]}>Completed!</p>
                     { !!this.props.dropPiece && !! this.props.dropPiece.url ?
                         <a href={this.props.dropPiece.url}>Here's your new piece!</a>
                         :
@@ -26,7 +26,7 @@ export default class CompletedView extends React.Component<CompletedProps, {}> {
 }
 
 const styles = {
-    dropCompletedView: {
+    completedView: {
         width: '100%',
         height: '100%'
     },
@@ -36,4 +36,13 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center'
     },
+    completedContainer: {
+        textAlign: 'center'
+    },
+    completedTitle: {
+        fontSize: '48px',
+        lineHeight: 1.2,
+        marginTop: '32px',
+        marginBottom: '16px'
+    }
 };

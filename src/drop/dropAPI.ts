@@ -4,18 +4,23 @@ import {graphQLQuery} from './../graphql';
 
 export type UploadResourceCallback = (resource: ExternalResourceInput) => void;
 
-export function uploadResource(resource: ExternalResourceInput, data: any, callback: UploadResourceCallback) {
+export function uploadResource(resource: ExternalResourceInput, data: any, completionCallback: UploadResourceCallback, progressCallback: ProgressCallback) {
     getUrls(1, (urls) => {
-        uploadFile(urls[0], data, (successful: boolean) => {
-            if (successful) {
-                const resourceObj: ExternalResourceInput = {
-                    fileType: resource.fileType,
-                    url: urls[0]
-                };
+        uploadFile(
+            urls[0],
+            data,
+            (successful: boolean) => {
+                if (successful) {
+                    const resourceObj: ExternalResourceInput = {
+                        fileType: resource.fileType,
+                        url: urls[0]
+                    };
 
-                callback(resourceObj);
-            }
-        });
+                    completionCallback(resourceObj);
+                }
+            },
+            (progress: number) => { progressCallback(progress); }
+        );
     });
 }
 
@@ -65,21 +70,10 @@ export function getUrls(count: number, callback: GetUrlsCallback) {
     });
 }
 
-export type UploadFilesCallback = (successful: boolean) => void;
+export type CompletionCallback = (successful: boolean) => void;
+export type ProgressCallback = (progress: number) => void;
 
-export function uploadFiles(files: Array<File>, callback: UploadFilesCallback) {
-    files.forEach(function(file: File) {
-        uploadFile(file.url, file.data, (successful) => {
-            if (successful) {
-                callback(true);
-            }
-        });
-    });
-}
-
-export type UploadFileCallback = (successful: boolean) => void;
-
-export function uploadFile(url: string, data: any, callback: UploadFileCallback) {
+export function uploadFile(url: string, data: any, completionCallback: CompletionCallback, progressCallback: ProgressCallback) {
     if (!url) {
         throw new Error('No file url');
     }
@@ -89,9 +83,15 @@ export function uploadFile(url: string, data: any, callback: UploadFileCallback)
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            callback(true);
+            completionCallback(true);
         } else if (xhr.readyState === 4) {
             throw new Error('Could not upload file. Status = ' + xhr.status + ' ' + xhr.responseText);
+        }
+    };
+
+    xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable) {
+            progressCallback(Math.round((e.loaded / e.total) * 100));
         }
     };
 

@@ -31,7 +31,11 @@ dropButton.addEventListener('click', () => {
             }]
         },
         presentation: {
-            title: 'A test piece'
+            title: 'A test piece',
+            preview: [{
+                fileType: 'wav',
+                url: 'http://localhost:8080/drop.wav'
+            }]
         },
         musicalMetadata: {
             lengthUs: 10000000,

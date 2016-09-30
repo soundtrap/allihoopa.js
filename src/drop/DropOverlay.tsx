@@ -10,13 +10,14 @@ import CompletedView from './CompletedView';
 import ErrorView from './ErrorView';
 
 import styles from './DropOverlayStyles';
-import {DropOverlayState, PieceInput, DropPiece, UploadStatus, Status} from './DropInterfaces';
+import {DropOverlayState, PieceInput, DropPiece, UploadStatus, UploadProgress, Status} from './DropInterfaces';
 import {getFileAsBytes, uploadResource, dropPiece} from './dropAPI';
 
 export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
     input: HTMLElement;
     piece: PieceInput;
     uploadStatus: UploadStatus = {};
+    uploadProgress: UploadProgress = {};
     public state: DropOverlayState;
 
     constructor(props: PieceInput) {
@@ -42,20 +43,34 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         this.uploadStatus['mixStem'] = false;
 
         getFileAsBytes(props.stems.mixStem[0].url, (mixStemBlob) => {
-            uploadResource(props.stems.mixStem[0], mixStemBlob, (resource) => {
-                this.piece.stems.mixStem[0] = resource;
-                this.uploadStatus['mixStem'] = true;
-            });
+            uploadResource(
+                props.stems.mixStem[0],
+                mixStemBlob,
+                (resource) => {
+                    this.piece.stems.mixStem[0] = resource;
+                    this.uploadStatus['mixStem'] = true;
+                },
+                (progress) => {
+                    this.uploadProgress['mixStem'] = progress;
+                }
+            );
         });
 
         if (!!props.presentation.preview) {
             this.uploadStatus['preview'] = false;
 
             getFileAsBytes(props.presentation.preview[0].url, (mixStemBlob) => {
-                uploadResource(props.presentation.preview[0], mixStemBlob, (resource) => {
-                    this.piece.presentation.preview[0] = resource;
-                    this.uploadStatus['preview'] = true;
-                });
+                uploadResource(
+                    props.presentation.preview[0],
+                    mixStemBlob,
+                    (resource) => {
+                        this.piece.presentation.preview[0] = resource;
+                        this.uploadStatus['preview'] = true;
+                    },
+                    (progress) => {
+                        this.uploadProgress['preview'] = progress;
+                    }
+                );
             });
         }
     }
@@ -118,21 +133,24 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
 
         let isReady: boolean = true;
         let numOfUploads = 0;
-        let numOfCompletedUploads = 0;
+        let sumOfProgress = 0;
 
         for (const key in this.uploadStatus) {
             const value = this.uploadStatus[key];
-            numOfUploads++;
             // found unfinished upload
             if (!value) {
                 isReady = false;
-            } else {
-                numOfCompletedUploads++;
             }
         }
 
+        for (const key in this.uploadProgress) {
+            const value = this.uploadProgress[key];
+            numOfUploads++;
+            sumOfProgress += value;
+        }
+
         this.setState({
-            uploadProgress: Math.round((numOfCompletedUploads / numOfUploads) * 100)
+            uploadProgress: Math.round(sumOfProgress / numOfUploads)
         });
 
         if (!isReady) {
@@ -157,10 +175,17 @@ export class DropOverlay extends React.Component<PieceInput, DropOverlayState> {
         if (!!this.piece.presentation.coverImage) {
             // Todo: handle different cases if the cover came from props, is default or was uploaded
             this.uploadStatus['coverImage'] = false;
-            uploadResource(this.piece.presentation.coverImage[0], this.state.coverImageData, (resource) => {
-                this.piece.presentation.coverImage[0] = resource;
-                this.uploadStatus['coverImage'] = true;
-            });
+            uploadResource(
+                this.piece.presentation.coverImage[0],
+                this.state.coverImageData,
+                (resource) => {
+                    this.piece.presentation.coverImage[0] = resource;
+                    this.uploadStatus['coverImage'] = true;
+                },
+                (progress) => {
+                    this.uploadProgress['coverImage'] = progress;
+                }
+            );
         }
 
         this.waitUploadees(() => {

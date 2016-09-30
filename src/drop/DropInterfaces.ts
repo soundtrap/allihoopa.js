@@ -89,3 +89,7 @@ export interface File {
 export interface UploadStatus {
     [key: string]: boolean;
 }
+
+export interface UploadProgress {
+    [key: string]: number;
+}
