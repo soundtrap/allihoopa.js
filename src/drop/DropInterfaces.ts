@@ -1,4 +1,10 @@
 // API data
+export interface CreatedPiece {
+    uuid: string;
+    url: string;
+    shortId: string;
+}
+
 export interface PieceInput {
     stems: StemsInput;
     presentation: PresentationDataInput;
@@ -6,31 +12,25 @@ export interface PieceInput {
     musicalMetadata: MusicalMetadataInput;
 }
 
-export interface DropPiece {
-    uuid: string;
-    url: string;
-    shortId: string;
+export interface AudioResourceInput {
+    ogg?: string;
+    wav?: string;
+}
+
+export interface ImageResourceInput {
+    png?: string;
 }
 
 export interface StemsInput {
     mixStem: AudioResourceInput;
 }
 
-export interface AudioResourceInput {
-    wav?: string;
-    ogg?: string;
-}
-
-export interface ImageResourceInput {
-    png: string;
-}
-
 export interface PresentationDataInput {
     title: string;
-    description?: string;
-    isListed?: boolean;
-    preview: AudioResourceInput;
-    coverImage?: ImageResourceInput;
+    description: string;
+    isListed: boolean;
+    preview: AudioResourceInput | null;
+    coverImage: ImageResourceInput | null;
 }
 
 export interface AttributionDataInput {
@@ -60,40 +60,4 @@ export interface FixedTimeSignatureInput {
 export interface TimeSignatureInput {
     upper: number;
     lower: number;
-}
-
-export enum Status {
-    MAIN,
-    WAITING,
-    COMPLETED,
-    ERROR
-}
-
-// state 
-export interface DropOverlayState {
-    title?: string;
-    titleActive?: boolean;
-    description?: string;
-    descriptionActive?: boolean;
-    isListed?: boolean;
-    coverImageUrlWithFallback?: string;
-    hasCoverImage?: boolean;
-    coverImageData?: string;
-    dropPiece?: DropPiece;
-    status?: Status;
-    uploadProgress?: number;
-    errorMessage?: string;
-}
-
-export interface File {
-    url: string;
-    data: any;
-}
-
-export interface UploadStatus {
-    [key: string]: boolean;
-}
-
-export interface UploadProgress {
-    [key: string]: number;
 }

@@ -23,25 +23,38 @@ authButton.addEventListener('click', () => {
 });
 
 dropButton.addEventListener('click', () => {
-    const piece = {
+    const piece = new Allihoopa.DropPiece({
         stems: {
-            mixStem: {
-                wav: 'http://localhost:8080/drop.wav'
-            }
+            mixStem: (completion: (data: Blob | null, error: Error | null) => void) => {
+                getFileAsBytes('http://localhost:8080/drop.wav', completion);
+            },
         },
         presentation: {
             title: 'A test piece',
-            preview: {
-                wav: 'http://localhost:8080/drop.wav'
-            }
+            coverImage: () => {
+
+            },
         },
         musicalMetadata: {
-            lengthUs: 10000000,
+            lengthMicroseconds: 10000000,
             tempo: {
                 fixed: 121
-            }
-        }
-    };
+            },
+            loop: {
+                startMicroseconds: 0,
+                endMicroseconds: 1000,
+            },
+            timeSignature: {
+                fixed: {
+                    upper: 4,
+                    lower: 4,
+                },
+            },
+        },
+        attribution: {
+            basedOnPieces: [],
+        },
+    });
 
     Allihoopa.drop(piece, (success) => {
         const p = document.createElement('pre');
@@ -50,3 +63,27 @@ dropButton.addEventListener('click', () => {
         document.body.appendChild(p);
     });
 });
+
+
+function getFileAsBytes(url: string, callback: (file: Blob | null, error: Error | null) => void) {
+    if (url.length > 0) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                const buf: Blob = xhr.response;
+
+                if (!buf || buf.size <= 0) {
+                    callback(null, new Error('Could not load file.'));
+                }
+                else {
+                    callback(buf, null);
+                }
+            } else {
+                callback(null, new Error('fetch error'));
+            }
+        };
+        xhr.send();
+    }
+}

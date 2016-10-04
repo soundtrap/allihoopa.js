@@ -30,7 +30,7 @@ describe('Configuration', () => {
     it('sets the configuration', () => {
         Config.setup({
             appKey: appKey,
-            appSecret: appSecret, 
+            appSecret: appSecret,
         });
 
         expect(Config.getAppKey()).toBe(appKey);

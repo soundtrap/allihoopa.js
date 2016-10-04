@@ -1,39 +1,38 @@
 import {getAppKey, getAppSecret, getAPIDomain} from './config';
 import {getAuthCookie} from './auth';
 
-export type APICallback = (successful: boolean, response: any) => void;
+export type Result<T>
+    = { status: 'OK', data: T }
+    | { status: 'ERROR', error: Error };
 
-export function graphQLQuery(query: any, callback: APICallback) {
+export type ResultCallback<T> = (result: Result<T>) => void;
+
+export function graphQLQuery<T>(
+    query: string,
+    variables: {[key: string]: any},
+    callback: ResultCallback<T>
+) {
     const url = `https://${getAPIDomain()}/v1/graphql`;
-
-    let callbackFired = false;
-
-    const callCallback = (value: boolean, response: any) => {
-        if (!callbackFired) {
-            callbackFired = true;
-            callback(value, response);
-        }
-    };
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', url);
+    xhr.responseType = 'json';
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Allihoopa-API-Key', getAppSecret());
+
     const authCookie = getAuthCookie();
-    if (!authCookie) {
-        // ToDo: handle the case
-        throw new Error('No access token.');
+    if (authCookie) {
+        const accessToken = JSON.parse(authCookie);
+        xhr.setRequestHeader('ph-access-token', accessToken.access_token);
     }
-    const accessToken = JSON.parse(authCookie);
-    xhr.setRequestHeader('ph-access-token', accessToken.access_token);
-    const secret = new Buffer(getAppKey() + ':' + getAppSecret()).toString('base64');
-    xhr.setRequestHeader('Authorization', 'Basic ' + secret);
+
     xhr.onload = () => {
         if (xhr.status === 200) {
-            callCallback(true, xhr.response);
+            callback({ status: 'OK', data: xhr.response.data });
         } else {
-            callCallback(false, xhr.response);
+            callback({ status: 'ERROR', error: new Error(xhr.responseText) });
         }
     };
 
-    xhr.send(JSON.stringify(query));
+    xhr.send(JSON.stringify({ query, variables }));
 }
