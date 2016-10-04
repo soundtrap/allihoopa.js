@@ -12,7 +12,7 @@ before_script:
   - sleep 3  # Give Xvfb some time to start
 
 script:
-#  - npm run test:travis-browsers  # Disable for now -- it doesn't load files properly
+  - npm run test:travis-browsers  # Disable for now -- it doesn't load files properly
   - export ALLIHOOPA_APP_KEY=dummy-app-key ALLIHOOPA_APP_SECRET=dummy-app-secret
   - npm link && (cd example && npm install && npm link allihoopa && ./node_modules/.bin/webpack)
   - if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then export BUILD_LEADER=yes; else export BUILD_LEADER=no; fi
