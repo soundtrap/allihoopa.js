@@ -61,7 +61,7 @@ const INITIAL_CONTENT = `
 <!DOCTYPE html>
 <html>
 <head>
-    <style>html, body { padding: 0, margin: 0}</style>
+    <style>html, body { padding: 0, margin: 0} * { box-sizing: border-box }</style>
     <script>
         (function(d) {
             var config = {

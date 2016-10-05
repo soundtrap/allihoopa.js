@@ -7,6 +7,15 @@ export const CENTERED_CONTAINER_STYLE = {
     justifyContent: 'center',
 };
 
+export const INPUT_RESET_STYLE = {
+    margin: 0,
+    padding: 0,
+    border: 0,
+    verticalAlign: 'baseline',
+    background: 'transparent',
+    outline: 'none',
+};
+
 export const RESET_BUTTON_STYLE = {
     background: 'transparent',
     border: 0,
@@ -34,5 +43,6 @@ export const VIBRANT_GREEN_COLOR = '#29DB29';
 export const BUTTON_HOVER_COLOR = '#28d22c';
 
 export const FONT_WEIGHT_LIGHT = 200;
+export const FONT_WEIGHT_BOLD = 700;
 
 export const MQ_MIN_WIDTH_SMALL = '@media (min-width: 768px)';
