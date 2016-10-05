@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as Radium from 'radium';
 
-import {CreatedPiece} from './DropInterfaces';
-import {CENTERED_CONTAINER_STYLE, RESET_BUTTON_STYLE} from './CommonStyles';
-import * as CommonStyles from './CommonStyles';
+import {CreatedPiece} from '../DropInterfaces';
+import * as CommonStyles from '../styles/CommonStyles';
 
 export interface CompletedProps {
     dropPiece: CreatedPiece | undefined;
@@ -24,11 +23,11 @@ export class CompletedView extends React.Component<CompletedProps, {}> {
 
     render() {
         return (
-            <div style={[VIEW_STYLE, CENTERED_CONTAINER_STYLE]}>
+            <div style={[VIEW_STYLE, CommonStyles.CENTERED_CONTAINER_STYLE]}>
                 <div style={CONTAINER_STYLE}>
                     <button
                         key='closeButton'
-                        style={[RESET_BUTTON_STYLE, CLOSE_BUTTON_STYLE]}
+                        style={[CommonStyles.RESET_BUTTON_STYLE, CLOSE_BUTTON_STYLE]}
                         onClick={() => this.handleCloseClick()}
                     >
                         <svg style={CROSS_IMAGE_STYLE} fill='#000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'>
@@ -40,7 +39,7 @@ export class CompletedView extends React.Component<CompletedProps, {}> {
                     {!!this.props.dropPiece && !!this.props.dropPiece.url ?
                         <button
                             key='pieceButton'
-                            style={[RESET_BUTTON_STYLE, PIECE_BUTTON_STYLE]}
+                            style={[CommonStyles.RESET_BUTTON_STYLE, PIECE_BUTTON_STYLE]}
                             onClick={(e) => this.handleOpenPiece(e)}
                         >
                             See your new piece in Allihoopa

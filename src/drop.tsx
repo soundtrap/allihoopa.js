@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import {Overlay} from './drop/Overlay';
-import {Coordinator} from './drop/Coordinator';
+import {Overlay} from './drop/components/Overlay';
+import {Coordinator} from './drop/components/Coordinator';
 import {DropPiece} from './drop/PieceData';
 
 export type DropCallback = (successful: boolean) => void;

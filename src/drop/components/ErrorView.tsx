@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Radium from 'radium';
 
-import * as CommonStyles from './CommonStyles';
+import * as CommonStyles from '../styles/CommonStyles';
 
 export interface ErrorProps {
     errorMessage: string | undefined;

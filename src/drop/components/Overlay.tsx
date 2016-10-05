@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleRoot} from 'radium';
-import * as CommonStyles from './CommonStyles';
+import * as CommonStyles from '../styles/CommonStyles';
 
 const Frame = require('react-frame-component');
 
