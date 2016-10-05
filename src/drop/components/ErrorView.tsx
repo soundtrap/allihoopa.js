@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as Radium from 'radium';
+import * as React from 'react';
 
 import * as CommonStyles from '../styles/CommonStyles';
 
@@ -20,5 +20,5 @@ export class ErrorView extends React.Component<ErrorProps, {}> {
 
 const VIEW_STYLE = {
     width: '100%',
-    height: '100%'
+    height: '100%',
 };

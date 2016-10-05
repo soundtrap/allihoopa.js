@@ -1,5 +1,5 @@
-import {getAppKey, getAppSecret, getAPIDomain} from './config';
 import {getAuthCookie} from './auth';
+import {getAPIDomain, getAppSecret} from './config';
 
 export type Result<T>
     = { status: 'OK', data: T }

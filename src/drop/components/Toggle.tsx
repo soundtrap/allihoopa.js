@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as Radium from 'radium';
+import * as React from 'react';
 
 export interface ToggleProps {
     enabledTitle: string;
@@ -37,9 +37,9 @@ const CONTAINER_STYLE = {
     height: '24px',
 };
 const IMAGE_STYLE = {
-    marginTop: '-3px'
+    marginTop: '-3px',
 };
 const LABEL_STYLE = {
     verticalAlign: 'top',
-    marginLeft: '8px'
+    marginLeft: '8px',
 };

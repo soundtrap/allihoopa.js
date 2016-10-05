@@ -15,6 +15,9 @@
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
         "no-var-keyword": true,
+        "no-unused-variable": [true, "react", {"ignore-pattern": "^_"}],
+        "no-unused-new": true,
+        "radix": true,
         "one-line": [
             true,
             "check-open-brace",
@@ -53,6 +56,11 @@
             "check-operator",
             "check-separator",
             "check-type"
-        ]
+        ],
+        "eofline": true,
+        "linebreak-style": [true, "LF"],
+        "trailing-comma": [true, {"multiline": "always"}],
+        "no-angle-bracket-type-assertion": true,
+        "ordered-imports": [true, {"import-sources-order": "lowercase-first"}]
     }
 }

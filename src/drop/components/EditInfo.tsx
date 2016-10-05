@@ -1,9 +1,11 @@
-import * as React from 'react';
 import * as Radium from 'radium';
+import * as React from 'react';
+
 import * as CommonStyles from '../styles/CommonStyles';
 
-import {Toggle} from './Toggle';
+import {Title} from './edit-info/Title';
 import {DefaultCover} from './DefaultCover';
+import {Toggle} from './Toggle';
 
 
 export interface EditInfoState {
@@ -51,7 +53,7 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
     render(): JSX.Element {
         return (
             <div>
-                <h3 style={HEADING_STYLE}>Drop to Allihoopa</h3>
+                <Title />
 
                 {this.renderCoverImageEditor()}
                 {this.renderTitleEditor()}
@@ -235,13 +237,6 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
     }
 }
 
-const HEADING_STYLE = {
-    fontSize: '22px',
-    lineHeight: 1.2,
-    marginTop: '32px',
-    marginBottom: '16px',
-};
-
 const COVER_LABEL_STYLE = {
     margin: '16px 0 4px 0',
 };
@@ -286,12 +281,6 @@ const PIECE_TITLE_STYLE = {
 const CONTROL_LABEL = {
     color: CommonStyles.DUSTY_GRAY_COLOR,
     fontSize: '14px',
-};
-
-const ACTIVE_STYLE = {
-    ':focus': {
-        color: CommonStyles.TURQUOISE_COLOR,
-    },
 };
 
 const PIECE_TITLE_INPUT_STYLE = {
@@ -355,7 +344,7 @@ const LINK_BUTTONS_STYLE = {
     textTransform: 'uppercase',
     fontSize: '14px',
     ':hover': {
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
     ':disabled': {
         color: CommonStyles.DUSTY_GRAY_COLOR,

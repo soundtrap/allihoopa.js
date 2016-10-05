@@ -38,7 +38,7 @@ dropButton.addEventListener('click', () => {
         musicalMetadata: {
             lengthMicroseconds: 10000000,
             tempo: {
-                fixed: 121
+                fixed: 121,
             },
             loop: {
                 startMicroseconds: 0,

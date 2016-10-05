@@ -1,8 +1,8 @@
-import * as React from 'react';
 import * as Radium from 'radium';
+import * as React from 'react';
 
-import {CreatedPiece} from '../DropInterfaces';
 import * as CommonStyles from '../styles/CommonStyles';
+import {CreatedPiece} from '../DropInterfaces';
 
 export interface CompletedProps {
     dropPiece: CreatedPiece | undefined;
@@ -72,7 +72,7 @@ const PIECE_BUTTON_STYLE = {
     color: 'white',
     ':hover': {
         cursor: 'pointer',
-        background: CommonStyles.BUTTON_HOVER_COLOR
+        background: CommonStyles.BUTTON_HOVER_COLOR,
     },
 };
 
@@ -83,7 +83,7 @@ const CLOSE_BUTTON_STYLE = {
     width: '64px',
     height: '64px',
     ':hover': {
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
 };
 

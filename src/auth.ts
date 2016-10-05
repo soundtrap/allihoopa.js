@@ -1,5 +1,5 @@
 import { getAppKey, getWebDomain } from './config';
-import { getCookie, setPersistentCookie, clearCookie } from './cookie';
+import { clearCookie, getCookie, setPersistentCookie } from './cookie';
 
 export type AuthCallback = (successful: boolean) => void;
 

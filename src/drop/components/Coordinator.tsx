@@ -1,13 +1,13 @@
 import * as React from 'react';
 
+import {Result} from '../../graphql';
+import * as DropAPI from '../DropAPI';
+import {CreatedPiece, PieceInput} from '../DropInterfaces';
+import {DropPiece} from '../PieceData';
+
+import {CompletedView} from './CompletedView';
 import {EditInfo, EditInfoState} from './EditInfo';
 import {WaitingView} from './WaitingView';
-import {CompletedView} from './CompletedView';
-import {DropPiece} from '../PieceData';
-import {PieceInput, CreatedPiece, AudioResourceInput, ImageResourceInput} from '../DropInterfaces';
-
-import * as DropAPI from '../DropAPI';
-import {Result} from '../../graphql';
 
 export type AudioAssetType = 'ogg' | 'wav';
 export type ImageAssetType = 'png';
