@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as CommonStyles from '../../styles/CommonStyles';
 
 import {CoverImageEditor} from './CoverImageEditor';
+import {ModalTextEditor} from './ModalTextEditor';
 
 import {CircledAddIcon} from '../../../icons/CircledAddIcon';
 
@@ -19,6 +20,7 @@ export interface DataEntryProps {
 
 export interface DataEntryState {
     focusedField: null | 'title' | 'description';
+    modalEditorField: null | 'title' | 'description';
 }
 
 @Radium
@@ -26,7 +28,10 @@ export class DataEntry extends React.Component<DataEntryProps, DataEntryState> {
     constructor(props: DataEntryProps) {
         super(props);
 
-        this.state = { focusedField: null };
+        this.state = {
+            focusedField: null,
+            modalEditorField: null,
+        };
     }
 
     render(): JSX.Element {
@@ -54,13 +59,27 @@ export class DataEntry extends React.Component<DataEntryProps, DataEntryState> {
                             <span style={[COUNTER_STYLE, {opacity: titleActive ? 1 : 0}]}>{50 - this.props.title.length}</span>
                         </div>
                         <input
-                            style={[CommonStyles.INPUT_RESET_STYLE, TITLE_STYLE]}
+                            style={[
+                                CommonStyles.INPUT_RESET_STYLE,
+                                CommonStyles.HIDDEN_XS,
+                                TITLE_STYLE,
+                            ]}
                             maxLength={50}
                             value={this.props.title}
-                            onFocus={() => this.setState({ focusedField: 'title' })}
-                            onBlur={() => this.setState({ focusedField: null })}
+                            onFocus={() => this.setState({ focusedField: 'title' } as DataEntryState)}
+                            onBlur={() => this.setState({ focusedField: null } as DataEntryState)}
                             onChange={e => this.props.onTitleChange((e.target as HTMLInputElement).value)}
                         />
+                        <span
+                            style={[
+                                CommonStyles.INPUT_RESET_STYLE,
+                                CommonStyles.HIDDEN_SM,
+                                TITLE_STYLE,
+                            ]}
+                            onClick={() => this.setState({ modalEditorField: 'title' } as DataEntryState)}
+                        >
+                            {this.props.title}
+                        </span>
                     </div>
 
                     <div
@@ -74,22 +93,71 @@ export class DataEntry extends React.Component<DataEntryProps, DataEntryState> {
                         <textarea
                             style={[
                                 CommonStyles.INPUT_RESET_STYLE,
+                                CommonStyles.HIDDEN_XS,
                                 DESCRIPTION_STYLE,
-                                showDescriptionAddButton && INSET_DESCRIPTION_STYLE]}
+                                showDescriptionAddButton && INSET_DESCRIPTION_STYLE,
+                            ]}
                             maxLength={140}
                             placeholder='Add'
                             value={this.props.description}
-                            onFocus={() => this.setState({ focusedField: 'description' })}
-                            onBlur={() => this.setState({ focusedField: null })}
+                            onFocus={() => this.setState({ focusedField: 'description' } as DataEntryState)}
+                            onBlur={() => this.setState({ focusedField: null } as DataEntryState)}
                             onChange={e => this.props.onDescriptionChange((e.target as HTMLTextAreaElement).value)}
                         />
+                        <span
+                            style={[
+                                CommonStyles.INPUT_RESET_STYLE,
+                                CommonStyles.HIDDEN_SM,
+                                DESCRIPTION_STYLE,
+                                showDescriptionAddButton && INSET_DESCRIPTION_STYLE,
+                            ]}
+                            onClick={() => this.setState({ modalEditorField: 'description' } as DataEntryState)}
+                        >
+                            {this.props.description ||
+                                <span style={{color: CommonStyles.MASALA_COLOR}}>Add</span>}
+                        </span>
                         <div style={[ADD_ICON_STYLE, !showDescriptionAddButton && HIDE_ADD_ICON_STYLE]}>
                             <CircledAddIcon />
                         </div>
                     </div>
                 </div>
+
+                {this.renderModalEditor()}
             </div>
         );
+    }
+
+    renderModalEditor(): JSX.Element | null {
+        if (this.state.modalEditorField === 'title') {
+            return (
+                <ModalTextEditor
+                    title='Title of your piece'
+                    value={this.props.title}
+                    maxLength={50}
+                    extraTextareaStyle={{fontWeight: CommonStyles.FONT_WEIGHT_BOLD}}
+                    onChange={this.props.onTitleChange}
+                    onClose={() => this.setState({ modalEditorField: null } as DataEntryState)}
+                />
+            );
+        }
+        else if (this.state.modalEditorField === 'description') {
+            return (
+                <ModalTextEditor
+                    title='Description and Tags'
+                    value={this.props.description}
+                    maxLength={140}
+                    extraTextareaStyle={{
+                        fontWeight: CommonStyles.FONT_WEIGHT_LIGHT,
+                        fontSize: 24,
+                        letterSpacing: -0.9,
+                    }}
+                    onChange={this.props.onDescriptionChange}
+                    onClose={() => this.setState({ modalEditorField: null } as DataEntryState)}
+                />
+            );
+        }
+
+        return null;
     }
 }
 
@@ -142,11 +210,13 @@ const TITLE_CONTAINER_STYLE: React.CSSProperties = {
 
 const DESCRIPTION_CONTAINER_STYLE: React.CSSProperties = {
     position: 'relative',
+    marginBottom: 22,
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         background: 'rgba(0, 0, 0, 0.02)',
         border: '1px solid rgba(0, 0, 0, 0.0)',
         flexGrow: 1,
+        marginBottom: 0,
         padding: '16px 20px',
         display: 'flex',
         flexDirection: 'column',
@@ -193,10 +263,14 @@ const TEXT_EDITORS_CONTAINER_STYLE: React.CSSProperties = {
 
 const ADD_ICON_STYLE: React.CSSProperties = {
     position: 'absolute',
-    top: 38,
+    top: 22,
     width: 20,
     overflow: 'hidden',
     transition: 'width 0.12s ease-in-out',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        top: 38,
+    },
 };
 
 const HIDE_ADD_ICON_STYLE: React.CSSProperties = {
