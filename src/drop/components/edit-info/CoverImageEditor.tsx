@@ -2,7 +2,8 @@ import * as Radium from 'radium';
 import * as React from 'react';
 
 import * as CommonStyles from '../../styles/CommonStyles';
-import {DefaultCover} from '../DefaultCover';
+
+import {DefaultCover} from '../../../icons/DefaultCover';
 
 export interface CoverImageEditorProps {
     dataURL: string | null;
