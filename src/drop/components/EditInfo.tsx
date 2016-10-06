@@ -53,7 +53,9 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
     render(): JSX.Element {
         return (
             <div>
-                <Title />
+                <Title
+                    onClose={this.props.onCancel}
+                />
 
                 <DataEntry
                     title={this.state.title}
@@ -99,7 +101,7 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
                 <button
                     key='cancel'
                     style={[COLOR_LINK_STYLE, LINK_BUTTONS_STYLE, CANCEL_BUTTON_STYLE, CommonStyles.RESET_BUTTON_STYLE]}
-                    onClick={e => this.handleCloseClick(e)}>Cancel</button>
+                    onClick={this.props.onCancel}>Cancel</button>
             </div>
         );
     }
@@ -123,12 +125,6 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
         e.preventDefault();
 
         this.props.onCommit(this.state);
-    }
-
-    private handleCloseClick(e: React.SyntheticEvent): void {
-        e.preventDefault();
-
-        this.props.onCancel();
     }
 }
 
