@@ -114,7 +114,7 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
                         mode={LogoMode.WhiteMonochrome}
                         style={DROP_BUTTON_ICON_STYLE}
                     />
-                    Drop
+                    <span>Drop</span>
                 </button>
             </div>
         );
@@ -188,8 +188,6 @@ const CANCEL_BUTTON_STYLE = {
 const DROP_BUTTON_STYLE = {
     background: CommonStyles.BRIGHT_MAGENTA_COLOR,
     color: '#fff',
-    display: 'flex',
-    alignItems: 'flex-end',
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         marginLeft: '20px',
@@ -199,7 +197,7 @@ const DROP_BUTTON_STYLE = {
     [CommonStyles.MQ_MAX_WIDTH_SMALL]: {
         padding: 14,
         width: '100%',
-        justifyContent: 'center',
+        marginBottom: 0,
     },
 };
 
@@ -207,4 +205,5 @@ const DROP_BUTTON_ICON_STYLE = {
     width: 17,
     height: 17,
     marginRight: 8,
+    marginBottom: -3,
 };

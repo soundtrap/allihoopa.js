@@ -18,15 +18,12 @@ export class CoverImageEditor extends React.Component<CoverImageEditorProps, voi
             <div
                 style={CONTAINER_STYLE}
             >
-                { this.props.dataURL ?
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            background: `url(${this.props.dataURL}) center center / cover no-repeat`,
-                        }}
-                    ></div> :
-                    <DefaultCover />
+                { this.props.dataURL
+                    ? <img
+                        style={{ width: '100%', height: '100%' }}
+                        src={this.props.dataURL}
+                    />
+                    : <DefaultCover />
                 }
 
                 <button

@@ -54,7 +54,6 @@ const CONTAINER_STYLE = {
     fontFamily: CommonStyles.FONT_STACK,
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         maxHeight: '660px',
-        maxWidth: '100%',
     },
 };
 

@@ -43,6 +43,7 @@ export class ModalTextEditor extends React.Component<ModalTextEditorProps, void>
                     value={this.props.value}
                     style={[CommonStyles.INPUT_RESET_STYLE, TEXTAREA_STYLE, this.props.extraTextareaStyle]}
                     ref={elem => this.textarea = elem}
+                    maxLength={this.props.maxLength}
                     onChange={e => this.props.onChange((e.target as HTMLTextAreaElement).value)}
                     onFocus={() => this.scrollToTop()}
                     onBlur={this.props.onClose}
@@ -78,6 +79,7 @@ const NAVBAR_STYLE: React.CSSProperties = {
 const COUNTER_STYLE: React.CSSProperties = {
     color: '#c8c8c8',
     fontSize: 14,
+    WebkitTransform: 'translate3d(0, 0, 0)',
 };
 
 const TITLE_STYLE: React.CSSProperties = {
@@ -93,4 +95,5 @@ const TEXTAREA_STYLE: React.CSSProperties = {
     letterSpacing: -1,
     flexGrow: 1,
     margin: '0 16px',
+    WebkitTransform: 'translate3d(0, 0, 0)',
 };

@@ -176,6 +176,7 @@ const TITLE_STYLE: React.CSSProperties = {
     fontWeight: CommonStyles.FONT_WEIGHT_BOLD,
     display: 'block',
     width: '100%',
+    wordBreak: 'break-all',
 };
 
 const DESCRIPTION_STYLE: React.CSSProperties = {
@@ -186,6 +187,7 @@ const DESCRIPTION_STYLE: React.CSSProperties = {
     display: 'block',
     width: '100%',
     transition: 'padding 0.12s ease-in-out',
+    wordBreak: 'break-all',
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         flexGrow: 1,
@@ -247,6 +249,8 @@ const COVER_IMAGE_CONTAINER_STYLE: React.CSSProperties = {
 };
 
 const CONTAINER_STYLE: React.CSSProperties = {
+    WebkitTransform: 'translate3d(0, 0, 0)',
+
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         display: 'flex',
         flexDirection: 'row',
