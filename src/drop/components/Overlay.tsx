@@ -47,12 +47,12 @@ const CONTAINER_STYLE = {
     textAlign: 'left',
     maxWidth: '740px',
     width: '100%',
-    maxHeight: '660px',
     height: '100%',
     overflow: 'scroll',
     padding: '16px',
     fontFamily: CommonStyles.FONT_STACK,
-    '@media (max-width: 768px)': {
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        maxHeight: '660px',
         maxWidth: '100%',
     },
 };

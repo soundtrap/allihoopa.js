@@ -5,7 +5,9 @@ import * as CommonStyles from '../styles/CommonStyles';
 
 import {DataEntry} from './edit-info/DataEntry';
 import {Title} from './edit-info/Title';
-import {Toggle} from './Toggle';
+import {Toggle} from './edit-info/Toggle';
+
+import {AllihoopaLogo, LogoMode} from '../../icons/AllihoopaLogo';
 
 
 export interface EditInfoState {
@@ -76,15 +78,17 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
     private renderVisibilityEditor(): JSX.Element {
         return (
             <div>
-                <p>
+                <div>
                     <span style={[VISIBILITY_STYLE]}>Visibility</span>
                     <Toggle
                         enabledTitle='Listed'
                         disabledTitle='Unlisted'
+                        enabledDescription='Anyone can see this'
+                        disabledDescription='You need a direct link to see this'
                         value={this.state.listed}
-                        onChange={() => this.setState({listed: !this.state.listed} as EditInfoState)}
+                        onChange={value => this.setState({listed: value} as EditInfoState)}
                     />
-                </p>
+                </div>
             </div>
         );
     }
@@ -93,15 +97,25 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
         return (
             <div style={BUTTONS_STYLE}>
                 <button
-                    key='drop'
-                    style={[COLOR_LINK_STYLE, LINK_BUTTONS_STYLE, DROP_BUTTON_STYLE, CommonStyles.RESET_BUTTON_STYLE]}
-                    onClick={e => this.handleDropClick(e)}
-                    disabled={!this.state.title || this.state.title.length <= 0}>Drop</button>
+                    key='cancel'
+                    style={[CommonStyles.FLAT_BUTTON_STYLE, CANCEL_BUTTON_STYLE]}
+                    onClick={this.props.onCancel}
+                >
+                    Cancel
+                </button>
 
                 <button
-                    key='cancel'
-                    style={[COLOR_LINK_STYLE, LINK_BUTTONS_STYLE, CANCEL_BUTTON_STYLE, CommonStyles.RESET_BUTTON_STYLE]}
-                    onClick={this.props.onCancel}>Cancel</button>
+                    key='drop'
+                    style={[CommonStyles.FLAT_BUTTON_STYLE, DROP_BUTTON_STYLE]}
+                    onClick={e => this.handleDropClick(e)}
+                    disabled={!this.state.title || this.state.title.length <= 0}
+                >
+                    <AllihoopaLogo
+                        mode={LogoMode.WhiteMonochrome}
+                        style={DROP_BUTTON_ICON_STYLE}
+                    />
+                    Drop
+                </button>
             </div>
         );
     }
@@ -128,59 +142,69 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
     }
 }
 
-const COLOR_LINK_STYLE = {
-    color: CommonStyles.TURQUOISE_COLOR,
-    textDecoration: 'none',
-    ':visited': {
-        color: CommonStyles.TURQUOISE_COLOR,
-    },
-    ':hover': {
-        color: CommonStyles.LINK_HOVER_COLOR,
-    },
-    ':active': {
-        color: CommonStyles.LINK_HOVER_COLOR,
-    },
-};
-
 const VISIBILITY_STYLE = {
     display: 'inline-block',
+    fontSize: 12,
+    color: '#c8c8c8',
     verticalAlign: 'top',
-    marginRight: '8px',
-    marginBottom: '16px',
+    marginBottom: '8px',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        marginTop: '16px',
+    },
+
+    [CommonStyles.MQ_MAX_WIDTH_SMALL]: {
+        display: 'block',
+        borderTop: '1px solid rgba(74, 74, 74, 0.1)',
+        paddingTop: 20,
+    },
 };
 
 const BUTTONS_STYLE = {
-    fontSize: '16px',
-    display: 'block',
-    marginTop: '16px',
-    borderTop: '1px solid rgba(74, 74, 74, 0.1)',
-    padding: '12px 8px 40px',
-    '@media (min-width: 768px)': {
-        height: '52px',
-        padding: '12px 8px 12px 16px',
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        borderTop: '1px solid rgba(74, 74, 74, 0.1)',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginTop: 56,
+        paddingTop: 46,
     },
-};
 
-const LINK_BUTTONS_STYLE = {
-    float: 'right',
-    marginTop: '3px',
-    textTransform: 'uppercase',
-    fontSize: '14px',
-    ':hover': {
-        cursor: 'pointer',
-    },
-    ':disabled': {
-        color: CommonStyles.DUSTY_GRAY_COLOR,
+    [CommonStyles.MQ_MAX_WIDTH_SMALL]: {
+        margin: '80px -16px -16px -16px',
     },
 };
 
 const CANCEL_BUTTON_STYLE = {
-    marginRight: '26px',
+    display: 'none',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        display: 'block',
+        padding: '8px 22px',
+        border: `1px solid ${CommonStyles.DUSTY_GRAY_COLOR}`,
+        color: CommonStyles.DUSTY_GRAY_COLOR,
+    },
 };
 
 const DROP_BUTTON_STYLE = {
-    marginLeft: '2px',
-    '@media (max-width: 768px)': {
+    background: CommonStyles.BRIGHT_MAGENTA_COLOR,
+    color: '#fff',
+    display: 'flex',
+    alignItems: 'flex-end',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         marginLeft: '20px',
+        padding: '8px 22px',
     },
+
+    [CommonStyles.MQ_MAX_WIDTH_SMALL]: {
+        padding: 14,
+        width: '100%',
+        justifyContent: 'center',
+    },
+};
+
+const DROP_BUTTON_ICON_STYLE = {
+    width: 17,
+    height: 17,
+    marginRight: 8,
 };
