@@ -50,12 +50,56 @@ export class CoverImageEditor extends React.Component<CoverImageEditorProps, voi
             return;
         }
 
-        const image = files[0];
-        if (!image) {
+        const imageBlob = files[0];
+        if (!imageBlob) {
             return;
         }
 
-        this.props.onChange(image);
+        // Square center crop the image. This roughly works as follows:
+        //
+        // 1. Convert the Blob in the files array into a data URL
+        // 2. Assign the Data URL to an Image instance
+        // 3. Wait for the Image to load, crop and draw it on a 2d Canvas
+        // 4. Convert the canvas to a data URL
+        // 5. Use the `dataURLToBlob` function to convert it to a Blob
+        // 6. Pass the Blob to the `onChange` callback
+        const reader = new FileReader();
+        reader.onload = () => {
+            const image = new Image();
+            image.onload = () => {
+                const canvas: HTMLCanvasElement = document.createElement('canvas');
+                canvas.width = 640;
+                canvas.height = 640;
+
+                const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
+                if (!ctx) {
+                    throw new Error('Internal error: could not create rendering context');
+                }
+
+                let sx: number, sy: number, cw: number, ch: number;
+
+                if (image.width > image.height) {
+                    sx = (image.width - image.height) / 2;
+                    sy = 0;
+                    cw = image.height;
+                    ch = image.height;
+                }
+                else {
+                    sx = 0;
+                    sy = (image.height - image.width) / 2;
+                    cw = image.width;
+                    ch = image.width;
+                }
+
+                ctx.drawImage(image, sx, sy, cw, ch, 0, 0, 640, 640);
+
+                const cropURL = canvas.toDataURL('image/png');
+                this.props.onChange(dataURLToBlob(cropURL));
+            };
+            image.src = reader.result;
+        };
+
+        reader.readAsDataURL(imageBlob);
     }
 
     private handleOpenFileBrowser(e: React.SyntheticEvent): void {
@@ -69,6 +113,21 @@ export class CoverImageEditor extends React.Component<CoverImageEditorProps, voi
 
         coverImageInput.click();
     }
+}
+
+function dataURLToBlob(dataURL: string): Blob {
+    const arr: string[] = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/);
+    if (!mime) { throw new Error('Internal error: no mime type found'); }
+
+    const bstr = atob(arr[1]);
+    const u8arr = new Uint8Array(bstr.length);
+
+    for (let i = 0; i < bstr.length; ++i) {
+        u8arr[i] = bstr.charCodeAt(i);
+    }
+
+    return new Blob([u8arr], {type: mime[1]});
 }
 
 const BUTTON_STYLE: React.CSSProperties = {
