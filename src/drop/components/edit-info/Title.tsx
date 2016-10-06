@@ -5,21 +5,27 @@ import {AllihoopaLogo} from '../../../icons/AllihoopaLogo';
 
 import * as CommonStyles from '../../styles/CommonStyles';
 
+interface TitleProps {
+    onClose: () => void;
+}
+
 @Radium
-export class Title extends React.Component<void, void> {
+export class Title extends React.Component<TitleProps, void> {
     render(): JSX.Element {
         return (
             <div
                 style={CONTAINER_STYLE}
             >
                 <button
-                    style={[CANCEL_BUTTON_STYLE, CommonStyles.FLAT_BUTTON_STYLE]}
+                    style={[CommonStyles.FLAT_BUTTON_STYLE, CANCEL_BUTTON_STYLE]}
+                    onClick={this.props.onClose}
                 >
                     Cancel
                 </button>
                 <a
                     href='https://allihoopa.com'
                     target='_blank'
+                    style={PROFILE_IMAGE_STYLE}
                 >
                     <img
                         style={PROFILE_IMAGE_STYLE}
@@ -48,12 +54,14 @@ const CONTAINER_STYLE: React.CSSProperties = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    marginBottom: 36,
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         flexDirection: 'row-reverse',
         flexWrap: 'nowrap',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        marginBottom: 50,
     },
 };
 
@@ -62,15 +70,18 @@ const HEADER_CONTAINER_STYLE: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginTop: 14,
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         flexDirection: 'row',
+        marginTop: 0,
     },
 };
 
 const CANCEL_BUTTON_STYLE: React.CSSProperties = {
     color: CommonStyles.DUSTY_GRAY_COLOR,
     cursor: 'pointer',
+    paddingLeft: 0,
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         display: 'none',
@@ -97,5 +108,6 @@ const HEADER_STYLE: React.CSSProperties = {
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         fontSize: 40,
         letterSpacing: -0.7,
+        margin: '0 0 4px 16px',
     },
 };
