@@ -49,6 +49,7 @@ const CONTAINER_STYLE = {
     width: '100%',
     height: '100%',
     overflow: 'scroll',
+    WebkitOverflowScrolling: 'touch',
     padding: '16px',
     fontFamily: CommonStyles.FONT_STACK,
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
