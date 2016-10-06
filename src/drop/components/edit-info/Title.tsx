@@ -5,7 +5,7 @@ import {AllihoopaLogo} from '../../../icons/AllihoopaLogo';
 
 import * as CommonStyles from '../../styles/CommonStyles';
 
-interface TitleProps {
+export interface TitleProps {
     onClose: () => void;
 }
 
