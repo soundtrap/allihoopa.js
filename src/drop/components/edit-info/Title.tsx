@@ -1,6 +1,8 @@
 import * as Radium from 'radium';
 import * as React from 'react';
 
+import {graphQLQuery} from '../../../graphql';
+
 import {AllihoopaLogo} from '../../../icons/AllihoopaLogo';
 
 import * as CommonStyles from '../../styles/CommonStyles';
@@ -9,8 +11,55 @@ export interface TitleProps {
     onClose: () => void;
 }
 
+export interface TitleState {
+    profile: { url: string; image: string; username: string; } | null;
+}
+
+interface ProfileData {
+    me: {
+        username: string,
+        profileUrl: string,
+        profileImage: {
+            url: string;
+        };
+    } | null;
+}
+
 @Radium
-export class Title extends React.Component<TitleProps, void> {
+export class Title extends React.Component<TitleProps, TitleState> {
+    constructor(props: TitleProps) {
+        super(props);
+
+        this.state = {
+            profile: null,
+        };
+    }
+
+    componentWillMount() {
+        graphQLQuery<ProfileData>(
+            `{
+                me {
+                    username
+                    profileUrl
+                    profileImage(position: 30 withFallback: true) {
+                        url
+                    }
+                }
+            }`,
+            {},
+            (result) => {
+                if (result.status === 'OK' && result.data.me) {
+                    this.setState({
+                        profile: {
+                            url: result.data.me.profileUrl,
+                            image: result.data.me.profileImage.url,
+                            username: result.data.me.username,
+                        },
+                    } as TitleState);
+                }
+            });
+    }
+
     render(): JSX.Element {
         return (
             <div
@@ -22,16 +71,7 @@ export class Title extends React.Component<TitleProps, void> {
                 >
                     Cancel
                 </button>
-                <a
-                    href='https://allihoopa.com'
-                    target='_blank'
-                    style={PROFILE_IMAGE_STYLE}
-                >
-                    <img
-                        style={PROFILE_IMAGE_STYLE}
-                        src='https://ugc.ahcdn.se/production/resized_img/e6aa28e3-159b-4865-a947-fdf201c5436a'
-                    />
-                </a>
+                {this.renderProfileButton()}
                 <div
                     style={HEADER_CONTAINER_STYLE}
                 >
@@ -45,6 +85,26 @@ export class Title extends React.Component<TitleProps, void> {
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    renderProfileButton(): JSX.Element | null {
+        if (!this.state.profile) {
+            return null;
+        }
+
+        return (
+            <a
+                href={this.state.profile.url}
+                target='_blank'
+                style={PROFILE_IMAGE_STYLE}
+                title={`Logged in as ${this.state.profile.username}`}
+            >
+                <img
+                    style={PROFILE_IMAGE_STYLE}
+                    src={this.state.profile.image}
+                />
+            </a>
         );
     }
 }

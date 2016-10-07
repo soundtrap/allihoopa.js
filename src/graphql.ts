@@ -30,7 +30,7 @@ export function graphQLQuery<T>(
         if (xhr.status === 200) {
             callback({ status: 'OK', data: xhr.response.data });
         } else {
-            callback({ status: 'ERROR', error: new Error(xhr.responseText) });
+            callback({ status: 'ERROR', error: new Error(xhr.response) });
         }
     };
 
