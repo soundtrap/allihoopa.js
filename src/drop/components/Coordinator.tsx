@@ -98,7 +98,7 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
             />;
         }
         else if (!this.state.isUploadCompleted) {
-            return <WaitingView progress={0} />;
+            return <WaitingView />;
         }
         else if (this.state.createPieceResult && this.state.createPieceResult.status === 'OK') {
             return (
