@@ -115,7 +115,7 @@ const VINYL: React.CSSProperties = {
     left: 4,
     transform: 'rotate(90deg)',
     borderRadius: '100%',
-}
+};
 
 const VINYL_WRAPPER: React.CSSProperties = {
     width: '100%',
