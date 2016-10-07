@@ -1,8 +1,8 @@
 // API data
 export interface CreatedPiece {
-    uuid: string;
     url: string;
-    shortId: string;
+    title: string;
+    coverImage: { url: string };
 }
 
 export interface PieceInput {

@@ -93,9 +93,11 @@ export function dropPiece(piece: PieceInput, callback: ResultCallback<CreatedPie
         mutation ($piece: PieceInput!) {
             dropPiece(piece: $piece) {
                 piece {
-                    uuid,
-                    shortId,
                     url
+                    title
+                    coverImage(position: 10 withFallback: true) {
+                        url
+                    }
                 }
             }
         }`;
