@@ -5,8 +5,8 @@ import * as DropAPI from '../DropAPI';
 import {CreatedPiece, PieceInput} from '../DropInterfaces';
 import {DropPiece} from '../PieceData';
 
+import {EditInfo, EditInfoState} from './edit-info/EditInfo';
 import {CompletedView} from './CompletedView';
-import {EditInfo, EditInfoState} from './EditInfo';
 import {WaitingView} from './WaitingView';
 
 export type AudioAssetType = 'ogg' | 'wav';

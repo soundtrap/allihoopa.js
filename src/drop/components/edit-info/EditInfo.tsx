@@ -1,13 +1,13 @@
 import * as Radium from 'radium';
 import * as React from 'react';
 
-import * as CommonStyles from '../styles/CommonStyles';
+import * as CommonStyles from '../../styles/CommonStyles';
 
-import {DataEntry} from './edit-info/DataEntry';
-import {Title} from './edit-info/Title';
-import {Toggle} from './edit-info/Toggle';
+import {DataEntry} from './DataEntry';
+import {Title} from './Title';
+import {Toggle} from './Toggle';
 
-import {AllihoopaLogo, LogoMode} from '../../icons/AllihoopaLogo';
+import {AllihoopaLogo, LogoMode} from '../../../icons/AllihoopaLogo';
 
 
 export interface EditInfoState {
