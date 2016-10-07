@@ -1,5 +1,5 @@
-import * as Cookie from '../src/cookie';
 import * as Config from '../src/config';
+import * as Cookie from '../src/cookie';
 
 const TEST_COOKIE_NAME = 'ah-test-cookie';
 
