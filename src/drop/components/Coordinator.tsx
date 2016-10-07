@@ -36,6 +36,7 @@ export interface CoordinatorState {
 export interface CoordinatorProps {
     input: DropPiece;
     onClose: () => void;
+    onDropComplete: () => void;
 }
 
 export class Coordinator extends React.Component<CoordinatorProps, CoordinatorState> {
@@ -99,9 +100,15 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
         else if (!this.state.isUploadCompleted) {
             return <WaitingView progress={0} />;
         }
-        else {
-            return <CompletedView closeFunction={() => {}} dropPiece={undefined} />;
+        else if (this.state.createPieceResult && this.state.createPieceResult.status === 'OK') {
+            return (
+                <CompletedView
+                    closeFunction={this.props.onClose}
+                    dropPiece={this.state.createPieceResult.data}
+                />
+            );
         }
+        throw new Error('Unknown state');
     }
 
 
@@ -315,6 +322,8 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
                 isUploading: false,
                 createPieceResult: result,
             } as CoordinatorState);
+
+            this.props.onDropComplete();
         });
     }
 }

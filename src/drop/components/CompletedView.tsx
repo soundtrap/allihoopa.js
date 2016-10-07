@@ -6,7 +6,7 @@ import {CreatedPiece} from '../DropInterfaces';
 
 export interface CompletedProps {
     dropPiece: CreatedPiece | undefined;
-    closeFunction: any;
+    closeFunction: () => void;
 }
 
 @Radium

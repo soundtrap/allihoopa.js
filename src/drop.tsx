@@ -21,8 +21,15 @@ function renderDrop(piece: DropPiece, callback: DropCallback) {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    let successful = false;
+
     const onClose = () => {
         ReactDOM.unmountComponentAtNode(container);
+        callback(successful);
+    };
+
+    const onComplete = () => {
+        successful = true;
     };
 
     ReactDOM.render(
@@ -30,6 +37,7 @@ function renderDrop(piece: DropPiece, callback: DropCallback) {
             <Coordinator
                 input={piece}
                 onClose={onClose}
+                onDropComplete={onComplete}
             />
         </Overlay>,
         container
