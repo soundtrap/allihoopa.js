@@ -18,7 +18,10 @@ export function authenticate(callback: AuthCallback) {
 
     if (!popup) {
         console.warn('Could not open the popup window');
-        callback(false);
+
+        if (callback) {
+            callback(false);
+        }
         return;
     }
 
@@ -34,7 +37,10 @@ export function authenticate(callback: AuthCallback) {
     const callCallback = (value: boolean) => {
         if (!callbackFired) {
             callbackFired = true;
-            callback(value);
+
+            if (callback) {
+                callback(value);
+            }
         }
     };
 
