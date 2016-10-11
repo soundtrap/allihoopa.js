@@ -30,7 +30,7 @@ export class ModalTextEditor extends React.Component<ModalTextEditorProps, void>
                 >
                     <span style={COUNTER_STYLE}>{this.props.maxLength - this.props.value.length}</span>
                     <button
-                        style={[CommonStyles.FLAT_BUTTON_STYLE, {color: CommonStyles.BRIGHT_MAGENTA_COLOR}]}
+                        style={[CommonStyles.FLAT_BUTTON_STYLE, DONE_BUTTON_STYLE]}
                         onClick={this.props.onClose}
                     >
                         Done
@@ -59,13 +59,14 @@ export class ModalTextEditor extends React.Component<ModalTextEditorProps, void>
 
 const OVERLAY_STYLE: React.CSSProperties = {
     position: 'absolute',
-    width: '100%',
+    width: 'calc(100% + 32px)',
     height: '100%',
     top: 0,
     left: 0,
     background: '#fff',
     display: 'flex',
     flexDirection: 'column',
+    margin: '0 -16px',
 };
 
 const NAVBAR_STYLE: React.CSSProperties = {
@@ -96,4 +97,10 @@ const TEXTAREA_STYLE: React.CSSProperties = {
     flexGrow: 1,
     margin: '0 16px',
     WebkitTransform: 'translate3d(0, 0, 0)',
+};
+
+const DONE_BUTTON_STYLE: React.CSSProperties = {
+    color: CommonStyles.BRIGHT_MAGENTA_COLOR,
+    paddingRight: 0,
+    textAlign: 'right',
 };
