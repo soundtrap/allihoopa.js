@@ -95,6 +95,7 @@ const CHECKMARK_STYLE: React.CSSProperties = {
 };
 
 const TITLE_STYLE: React.CSSProperties = {
+    flexShrink: 0,
     fontSize: 22,
     lineHeight: 1.2,
     margin: '28px 8px 16px 8px',
@@ -117,6 +118,7 @@ const PIECE_TITLE_STYLE: React.CSSProperties = {
 const BUTTONS_CONTAINER_STYLE: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
+    flexShrink: 0,
     alignItems: 'stretch',
     alignSelf: 'stretch',
     marginBottom: -16,

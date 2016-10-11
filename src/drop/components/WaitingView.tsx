@@ -53,6 +53,7 @@ const WARNING_STYLE: React.CSSProperties = {
     position: 'fixed',
     bottom: 22,
     width: '80%',
+    left: '10%',
     opacity: 0.93,
     fontSize: 11,
     lineHeight: 1.2,
