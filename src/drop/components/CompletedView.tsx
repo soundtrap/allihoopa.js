@@ -4,6 +4,8 @@ import * as React from 'react';
 import * as CommonStyles from '../styles/CommonStyles';
 import {CreatedPiece} from '../DropInterfaces';
 
+import {Checkmark} from '../../icons/Checkmark';
+
 export interface CompletedProps {
     dropPiece: CreatedPiece;
     closeFunction: () => void;
@@ -15,6 +17,7 @@ export class CompletedView extends React.Component<CompletedProps, {}> {
         return (
             <div style={VIEW_STYLE}>
                 <div style={TITLE_STYLE}>
+                    <Checkmark style={CHECKMARK_STYLE} />
                     Yay, you dropped your piece
                     {' '}
                     <span style={PIECE_TITLE_STYLE}>{this.props.dropPiece.title}</span>
@@ -64,6 +67,18 @@ const VIEW_STYLE: React.CSSProperties = {
     alignItems: 'center',
     width: '100%',
     height: '100%',
+};
+
+const CHECKMARK_STYLE: React.CSSProperties = {
+    width: 41,
+    height: 41,
+    display: 'block',
+    margin: '0 auto 10px',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        width: 50,
+        height: 50,
+    },
 };
 
 const TITLE_STYLE: React.CSSProperties = {
