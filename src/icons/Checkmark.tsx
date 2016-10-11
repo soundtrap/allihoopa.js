@@ -13,9 +13,9 @@ export class Checkmark extends React.Component<React.HTMLAttributes, void> {
             >
                 <g
                     stroke='none'
-                    stroke-width='1'
+                    strokeWidth='1'
                     fill='none'
-                    fill-rule='evenodd'
+                    fillRule='evenodd'
                 >
                     <g>
                         <circle
@@ -25,7 +25,7 @@ export class Checkmark extends React.Component<React.HTMLAttributes, void> {
                             r='20.5' />
                         <polyline
                             stroke='#FFFFFF'
-                            stroke-width='3'
+                            strokeWidth='3'
                             points='9.97297297 20.9443547 17.7845794 28.7559611 31.027027 15.5135135' />
                     </g>
                 </g>

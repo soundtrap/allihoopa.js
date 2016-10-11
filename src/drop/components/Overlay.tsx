@@ -52,9 +52,6 @@ const CONTAINER_STYLE = {
     WebkitOverflowScrolling: 'touch',
     padding: '16px',
     fontFamily: CommonStyles.FONT_STACK,
-    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
-        maxHeight: '660px',
-    },
 };
 
 const INITIAL_CONTENT = `

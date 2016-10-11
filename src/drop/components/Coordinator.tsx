@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import {Result} from '../../graphql';
+import {getAppKey} from '../../config';
+import {graphQLQuery, Result} from '../../graphql';
 import * as DropAPI from '../DropAPI';
 import {CreatedPiece, PieceInput} from '../DropInterfaces';
 import {DropPiece} from '../PieceData';
@@ -8,6 +9,18 @@ import {DropPiece} from '../PieceData';
 import {EditInfo, EditInfoState} from './edit-info/EditInfo';
 import {CompletedView} from './CompletedView';
 import {WaitingView} from './WaitingView';
+
+export interface AppInfo {
+    name: string;
+}
+
+const APP_INFO_QUERY = `
+query($identifier: String!) {
+  app(identifier: $identifier) {
+    name
+  }
+}
+`;
 
 export type AudioAssetType = 'ogg' | 'wav';
 export type ImageAssetType = 'png';
@@ -31,6 +44,8 @@ export interface CoordinatorState {
     initialCoverImage: Blob | null;
 
     createPieceResult: Result<CreatedPiece> | null;
+
+    appInfo: AppInfo | null;
 }
 
 export interface CoordinatorProps {
@@ -63,6 +78,7 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
             coverImageState: { state: 'WAITING' },
             initialCoverImage: null,
             createPieceResult: null,
+            appInfo: null,
         };
     }
 
@@ -76,6 +92,14 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
         if (this.props.input.presentation.coverImage) {
             this.fetchInitialCoverImage();
         }
+
+        graphQLQuery(APP_INFO_QUERY, {identifier: getAppKey()}, result => {
+            if (result.status === 'OK') {
+                this.setState({
+                    appInfo: result.data,
+                } as CoordinatorState);
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -105,6 +129,7 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
                 <CompletedView
                     closeFunction={this.props.onClose}
                     dropPiece={this.state.createPieceResult.data}
+                    appName={this.state.appInfo && this.state.appInfo.name}
                 />
             );
         }

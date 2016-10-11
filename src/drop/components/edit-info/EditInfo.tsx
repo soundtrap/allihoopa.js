@@ -54,7 +54,7 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
 
     render(): JSX.Element {
         return (
-            <div>
+            <div style={CONTAINER_STYLE}>
                 <Title
                     onClose={this.props.onCancel}
                 />
@@ -141,6 +141,15 @@ export class EditInfo extends React.Component<EditInfoProps, EditInfoState> {
         this.props.onCommit(this.state);
     }
 }
+
+const CONTAINER_STYLE: React.CSSProperties = {
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+};
 
 const VISIBILITY_STYLE = {
     display: 'inline-block',

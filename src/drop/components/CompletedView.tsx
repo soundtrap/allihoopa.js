@@ -9,6 +9,7 @@ import {Checkmark} from '../../icons/Checkmark';
 export interface CompletedProps {
     dropPiece: CreatedPiece;
     closeFunction: () => void;
+    appName: string | null;
 }
 
 @Radium
@@ -48,13 +49,25 @@ export class CompletedView extends React.Component<CompletedProps, {}> {
                     </svg>
                 </div>
 
-                <a
-                    href={this.props.dropPiece.url}
-                    target='_blank'
-                    style={[CommonStyles.FLAT_BUTTON_STYLE, PIECE_BUTTON_STYLE]}
-                >
-                    View on Allihoopa
-                </a>
+                <div style={BUTTONS_CONTAINER_STYLE}>
+                    <a
+                        href={this.props.dropPiece.url}
+                        target='_blank'
+                        style={[CommonStyles.FLAT_BUTTON_STYLE, PIECE_BUTTON_STYLE]}
+                        onClick={
+                            /* Needs to be delayed, otherwise the link will not work. */
+                            () => setTimeout(this.props.closeFunction, 10)}
+                    >
+                        View on Allihoopa
+                    </a>
+                    <button
+                        style={[CommonStyles.FLAT_BUTTON_STYLE, CLOSE_BUTTON_STYLE]}
+                        onClick={() => this.props.closeFunction()}
+                    >
+                        Back
+                        {this.props.appName && `to ${this.props.appName}`}
+                    </button>
+                </div>
             </div>
         );
     }
@@ -101,14 +114,33 @@ const PIECE_TITLE_STYLE: React.CSSProperties = {
     fontWeight: CommonStyles.FONT_WEIGHT_BOLD,
 };
 
+const BUTTONS_CONTAINER_STYLE: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
+    marginBottom: -16,
+};
+
 const PIECE_BUTTON_STYLE: React.CSSProperties = {
     background: CommonStyles.BRIGHT_MAGENTA_COLOR,
     color: '#fff',
-    margin: '0 -16px -16px -16px',
     textAlign: 'center',
     alignSelf: 'stretch',
     padding: 14,
     textDecoration: 'none',
+    margin: '0 -16px 0 -16px',
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        alignSelf: 'center',
+        padding: '14px 40px',
+    },
+};
+
+const CLOSE_BUTTON_STYLE: React.CSSProperties = {
+    color: CommonStyles.DUSTY_GRAY_COLOR,
+    padding: 14,
+    cursor: 'pointer',
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
         alignSelf: 'center',
@@ -134,7 +166,7 @@ const VINYL: React.CSSProperties = {
 
 const VINYL_WRAPPER: React.CSSProperties = {
     width: '100%',
-    margin: '0 44px',
+    margin: '40px 44px 0',
     position: 'relative',
     maxWidth: 350,
 };
