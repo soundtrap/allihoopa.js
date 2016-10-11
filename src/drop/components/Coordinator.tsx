@@ -8,6 +8,7 @@ import {DropPiece} from '../PieceData';
 
 import {EditInfo, EditInfoState} from './edit-info/EditInfo';
 import {CompletedView} from './CompletedView';
+import {ErrorView} from './ErrorView';
 import {WaitingView} from './WaitingView';
 
 export interface AppInfo {
@@ -121,6 +122,9 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
                 onCancel={() => this.handleEditInfoCancel()}
             />;
         }
+        else if (this.hasUploadError()) {
+            return <ErrorView onClose={this.props.onClose} />;
+        }
         else if (!this.state.isUploadCompleted) {
             return <WaitingView />;
         }
@@ -136,6 +140,15 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
         throw new Error('Unknown state');
     }
 
+
+    private hasUploadError(): boolean {
+        return (
+            this.state.coverImageState.state === 'ERROR'
+            || this.state.mixStemState.state === 'ERROR'
+            || this.state.previewAudioState.state === 'ERROR'
+            || (!!this.state.createPieceResult && this.state.createPieceResult.status === 'ERROR')
+        );
+    }
 
     private handleEditInfoCommit(info: EditInfoState) {
         this.setState({
