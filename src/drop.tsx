@@ -9,10 +9,22 @@ import {authenticate} from './auth';
 
 export type DropCallback = (successful: boolean) => void;
 
-export function drop(props: DropPiece, callback: DropCallback) {
+export function drop(piece: DropPiece, callback: DropCallback) {
+    if (!piece) {
+        throw new Error('Piece argument not provided');
+    }
+
+    if (!(piece instanceof DropPiece)) {
+        throw new Error('Provided piece is not an Allihoopa.DropPiece instance');
+    }
+
+    if (callback && !(callback instanceof Function)) {
+        throw new Error('Provided callback is not a function');
+    }
+
     authenticate(success => {
         if (success) {
-            renderDrop(props, callback);
+            renderDrop(piece, callback);
         }
     });
 }
@@ -26,7 +38,10 @@ function renderDrop(piece: DropPiece, callback: DropCallback) {
     const onClose = () => {
         ReactDOM.unmountComponentAtNode(container);
         container.parentNode.removeChild(container);
-        callback(successful);
+
+        if (callback) {
+            callback(successful);
+        }
     };
 
     const onComplete = () => {

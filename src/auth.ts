@@ -16,6 +16,12 @@ export function authenticate(callback: AuthCallback) {
         'allihoopa_auth',
         'width=420,height=600');
 
+    if (!popup) {
+        console.warn('Could not open the popup window');
+        callback(false);
+        return;
+    }
+
     let eventListener: (event: Event) => void;
     let pollTimer: number;
     let callbackFired = false;
