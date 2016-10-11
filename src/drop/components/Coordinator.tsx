@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {getAppKey} from '../../config';
+import {getApplicationIdentifier} from '../../config';
 import {graphQLQuery, Result} from '../../graphql';
 import * as DropAPI from '../DropAPI';
 import {CreatedPiece, PieceInput} from '../DropInterfaces';
@@ -93,7 +93,7 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
             this.fetchInitialCoverImage();
         }
 
-        graphQLQuery(APP_INFO_QUERY, {identifier: getAppKey()}, result => {
+        graphQLQuery(APP_INFO_QUERY, {identifier: getApplicationIdentifier()}, result => {
             if (result.status === 'OK') {
                 this.setState({
                     appInfo: result.data,

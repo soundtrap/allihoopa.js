@@ -1,7 +1,7 @@
 import * as Allihoopa from 'allihoopa';
 
-declare const ALLIHOOPA_APP_KEY: string;
-declare const ALLIHOOPA_APP_SECRET: string;
+declare const ALLIHOOPA_APP_IDENTIFIER: string;
+declare const ALLIHOOPA_API_KEY: string;
 
 const authButton = document.querySelector('#js-open-auth');
 const dropButton = document.querySelector('#js-open-drop');
@@ -9,8 +9,8 @@ console.assert(!!authButton);
 console.assert(!!dropButton);
 
 Allihoopa.setup({
-    appKey: ALLIHOOPA_APP_KEY,
-    appSecret: ALLIHOOPA_APP_SECRET,
+    app: ALLIHOOPA_APP_IDENTIFIER,
+    apiKey: ALLIHOOPA_API_KEY,
 });
 
 authButton.addEventListener('click', () => {

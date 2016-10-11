@@ -1,4 +1,4 @@
-import { getAppKey, getWebDomain } from './config';
+import { getApplicationIdentifier, getWebDomain } from './config';
 import { clearCookie, getCookie, setPersistentCookie } from './cookie';
 
 export type AuthCallback = (successful: boolean) => void;
@@ -12,7 +12,7 @@ export function authenticate(callback: AuthCallback) {
     clearCookie(getAuthCookieName());
 
     const popup = window.open(
-        `https://${getWebDomain()}/account/login?response_type=token&client_id=${getAppKey()}&redirect_type=postmessage`,
+        `https://${getWebDomain()}/account/login?response_type=token&client_id=${getApplicationIdentifier()}&redirect_type=postmessage`,
         'allihoopa_auth',
         'width=420,height=600');
 
@@ -64,7 +64,7 @@ export function authenticate(callback: AuthCallback) {
 }
 
 function getAuthCookieName() {
-    return `ah-auth-${getAppKey()}`;
+    return `ah-auth-${getApplicationIdentifier()}`;
 }
 
 function saveAuthCookie(data: string) {

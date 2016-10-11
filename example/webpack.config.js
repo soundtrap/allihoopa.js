@@ -1,11 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var APP_KEY = process.env.ALLIHOOPA_APP_KEY;
-var APP_SECRET = process.env.ALLIHOOPA_APP_SECRET;
+var APP_IDENTIFIER = process.env.ALLIHOOPA_APP_IDENTIFIER;
+var API_KEY = process.env.ALLIHOOPA_API_KEY;
 
-if (!APP_KEY || !APP_SECRET) {
-    throw new Error('Please set the ALLIHOOPA_APP_KEY and ALLIHOOPA_APP_SECRET environment variables before building this example');
+if (!APP_IDENTIFIER || !API_KEY) {
+    throw new Error('Please set the ALLIHOOPA_APP_IDENTIFIER and ALLIHOOPA_API_KEY environment variables before building this example');
 }
 
 module.exports = {
@@ -35,8 +35,8 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            ALLIHOOPA_APP_KEY: JSON.stringify(APP_KEY),
-            ALLIHOOPA_APP_SECRET: JSON.stringify(APP_SECRET),
+            ALLIHOOPA_APP_IDENTIFIER: JSON.stringify(APP_IDENTIFIER),
+            ALLIHOOPA_API_KEY: JSON.stringify(API_KEY),
         }),
     ],
 };

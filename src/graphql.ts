@@ -1,5 +1,5 @@
 import {getAuthCookie} from './auth';
-import {getAPIDomain, getAppSecret} from './config';
+import {getAPIDomain, getAPIKey} from './config';
 
 export type Result<T>
     = { status: 'OK', data: T }
@@ -18,7 +18,7 @@ export function graphQLQuery<T>(
     xhr.open('POST', url);
     xhr.responseType = 'json';
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Allihoopa-API-Key', getAppSecret());
+    xhr.setRequestHeader('Allihoopa-API-Key', getAPIKey());
 
     const authCookie = getAuthCookie();
     if (authCookie) {

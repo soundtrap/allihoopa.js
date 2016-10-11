@@ -1,6 +1,6 @@
 export interface IOptions {
-    appKey: string;
-    appSecret: string;
+    app: string;
+    apiKey: string;
 }
 
 let CURRENT_OPTIONS: IOptions | null = null;
@@ -13,23 +13,35 @@ export function setup(options: IOptions) {
         throw new Error('Can not configure the Allihoopa SDK more than once');
     }
 
+    if (!options) {
+        throw new Error('Options to setup() not provided');
+    }
+
+    if (!options.app || typeof options.app as any !== 'string') {
+        throw new Error('Field `app` of configuration is missing or invalid');
+    }
+
+    if (!options.apiKey || typeof options.apiKey as any !== 'string') {
+        throw new Error('Field `apiKey` of configuration is missing or invalid');
+    }
+
     CURRENT_OPTIONS = options;
 }
 
-export function getAppKey(): string {
+export function getApplicationIdentifier(): string {
     if (CURRENT_OPTIONS === null) {
         throw new Error('Allihoopa SDK not yet configured; please call setup() first');
     }
 
-    return CURRENT_OPTIONS.appKey;
+    return CURRENT_OPTIONS.app;
 }
 
-export function getAppSecret(): string {
+export function getAPIKey(): string {
     if (CURRENT_OPTIONS === null) {
         throw new Error('Allihoopa SDK not yet configured; please call setup() first');
     }
 
-    return CURRENT_OPTIONS.appSecret;
+    return CURRENT_OPTIONS.apiKey;
 }
 
 export function getWebDomain(): string {

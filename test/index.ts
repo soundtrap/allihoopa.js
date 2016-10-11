@@ -29,24 +29,24 @@ describe('Configuration', () => {
 
     it('sets the configuration', () => {
         Config.setup({
-            appKey: appKey,
-            appSecret: appSecret,
+            app: appKey,
+            apiKey: appSecret,
         });
 
-        expect(Config.getAppKey()).toBe(appKey);
-        expect(Config.getAppSecret()).toBe(appSecret);
+        expect(Config.getApplicationIdentifier()).toBe(appKey);
+        expect(Config.getAPIKey()).toBe(appSecret);
     });
 
     it('can not set the configuration twice', () => {
         Config.setup({
-            appKey: appKey,
-            appSecret: appSecret,
+            app: appKey,
+            apiKey: appSecret,
         });
 
         const secondSetup = () => {
             Config.setup({
-                appKey: appKey,
-                appSecret: appSecret,
+                app: appKey,
+                apiKey: appSecret,
             });
         };
 
@@ -56,5 +56,25 @@ describe('Configuration', () => {
     it('should use the live domain setup', () => {
         expect(Config.getWebDomain()).toBe('allihoopa.com');
         expect(Config.getAPIDomain()).toBe('api.allihoopa.com');
+    });
+
+    it('rejects missing configuration', () => {
+        expect(() => (Config.setup as any)()).toThrow();
+    });
+
+    it('rejects empty configuration', () => {
+        expect(() => Config.setup({} as any)).toThrow();
+    });
+
+    it('rejects invalid configuration', () => {
+        expect(() => Config.setup({ dummy: 'invalid' } as any)).toThrow();
+    });
+
+    it('rejects invalid app identifier type', () => {
+        expect(() => Config.setup({ app: 123, apiKey: 'something' } as any)).toThrow();
+    });
+
+    it('rejects invalid api key type', () => {
+        expect(() => Config.setup({ app: 'something', apiKey: 123 } as any)).toThrow();
     });
 });
