@@ -8,9 +8,9 @@ var plugins = [
 ];
 var externals = {};
 
-var outputBasename = 'allihoopa';
+var outputBasename = 'allihoopa-standalone';
 if (yargs.argv.externalReact) {
-    outputBasename = 'allihoopa-standalone';
+    outputBasename = 'allihoopa';
     externals = {
         'react': 'React',
         'react-dom': 'ReactDOM',
@@ -24,6 +24,11 @@ if (yargs.argv.versionTag) {
 var outputFilename = `${outputBasename}.js`;
 if (yargs.argv.production) {
     outputFilename = `${outputBasename}.min.js`;
+    plugins.push(new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify('production'),
+        },
+    }));
     plugins.push(new webpack.optimize.UglifyJsPlugin({
         minimize: true,
         compress: {
