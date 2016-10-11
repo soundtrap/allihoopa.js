@@ -26,7 +26,7 @@ dropButton.addEventListener('click', () => {
     const piece = new Allihoopa.DropPiece({
         stems: {
             mixStem: (completion: (data: Blob | null, error: Error | null) => void) => {
-                getFileAsBytes('http://localhost:8080/drop.wav', completion);
+                getFileAsBytes(window.location.origin + '/drop.wav', completion);
             },
         },
         presentation: {
