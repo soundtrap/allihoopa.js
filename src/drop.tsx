@@ -25,6 +25,7 @@ function renderDrop(piece: DropPiece, callback: DropCallback) {
 
     const onClose = () => {
         ReactDOM.unmountComponentAtNode(container);
+        container.parentNode.removeChild(container);
         callback(successful);
     };
 
