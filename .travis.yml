@@ -13,7 +13,7 @@ before_script:
 
 script:
   - npm run test:travis-browsers  # Disable for now -- it doesn't load files properly
-  - export ALLIHOOPA_APP_KEY=dummy-app-key ALLIHOOPA_APP_SECRET=dummy-app-secret
+  - export ALLIHOOPA_APP_IDENTIFIER=dummy-app-key ALLIHOOPA_API_KEY=dummy-app-secret
   - npm link && (cd example && npm install && npm link allihoopa && ./node_modules/.bin/webpack)
   - if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then export BUILD_LEADER=yes; else export BUILD_LEADER=no; fi
 
