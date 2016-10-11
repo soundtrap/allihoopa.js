@@ -34,7 +34,7 @@ if (yargs.argv.production) {
 }
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/index-bundle.js',
     output: {
         path: path.join(__dirname, '/dist'),
         filename: outputFilename,
