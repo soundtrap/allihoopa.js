@@ -3,11 +3,14 @@ import * as React from 'react';
 
 import * as CommonStyles from '../styles/CommonStyles';
 
+import {ProgressLogo} from '../../icons/ProgressLogo';
+
 @Radium
 export class WaitingView extends React.Component<void, void> {
     render() {
         return (
             <div style={[CommonStyles.CENTERED_CONTAINER_STYLE, CONTAINER_STYLE]}>
+                <ProgressLogo style={PROGRESS_LOGO} />
                 <p style={TITLE_STYLE}>Dropping your piece to&nbsp;Allihoopa…</p>
 
                 <div style={WARNING_STYLE}>Don't close this screen or you can kiss your piece bye bye</div>
@@ -21,6 +24,16 @@ const CONTAINER_STYLE: React.CSSProperties = {
     flexDirection: 'column',
     justifyContent: 'center',
     height: '100%',
+};
+
+const PROGRESS_LOGO: React.CSSProperties = {
+    width: 41,
+    height: 41,
+
+    [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
+        width: 50,
+        height: 50,
+    },
 };
 
 const TITLE_STYLE: React.CSSProperties = {
