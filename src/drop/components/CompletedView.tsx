@@ -65,7 +65,7 @@ export class CompletedView extends React.Component<CompletedProps, {}> {
                         onClick={() => this.props.closeFunction()}
                     >
                         Back
-                        {this.props.appName && `to ${this.props.appName}`}
+                        {this.props.appName && ` to ${this.props.appName}`}
                     </button>
                 </div>
             </div>

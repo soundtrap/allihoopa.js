@@ -16,7 +16,7 @@ export interface ToggleProps {
 export class Toggle extends React.Component<ToggleProps, void> {
     render() {
         return (
-            <div>
+            <div style={CONTAINER_STYLE}>
                 <div
                     style={TOGGLE_STYLE}
                     onClick={() => this.props.onChange(!this.props.value)}
@@ -36,6 +36,10 @@ export class Toggle extends React.Component<ToggleProps, void> {
         );
     }
 }
+
+const CONTAINER_STYLE: React.CSSProperties = {
+    display: 'flex',
+};
 
 const TOGGLE_STYLE: React.CSSProperties = {
     display: 'inline-block',
@@ -100,8 +104,7 @@ const CIRCLE_ENABLED_STYLE: React.CSSProperties = {
 const DESCRIPTION_CONTAINER_STYLE: React.CSSProperties = {
     marginLeft: 10,
     position: 'relative',
-    display: 'inline',
-    top: 2,
+    flexGrow: 1,
 };
 
 const DESCRIPTION_STYLE: React.CSSProperties = {
@@ -110,6 +113,5 @@ const DESCRIPTION_STYLE: React.CSSProperties = {
     left: 0,
     fontSize: 14,
     color: CommonStyles.DUSTY_GRAY_COLOR,
-    display: 'inline-table',
     transition: 'opacity .12s linear',
 };

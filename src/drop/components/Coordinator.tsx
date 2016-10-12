@@ -12,7 +12,9 @@ import {ErrorView} from './ErrorView';
 import {WaitingView} from './WaitingView';
 
 export interface AppInfo {
-    name: string;
+    app: {
+        name: string;
+    } | null;
 }
 
 const APP_INFO_QUERY = `
@@ -133,7 +135,7 @@ export class Coordinator extends React.Component<CoordinatorProps, CoordinatorSt
                 <CompletedView
                     closeFunction={this.props.onClose}
                     dropPiece={this.state.createPieceResult.data}
-                    appName={this.state.appInfo && this.state.appInfo.name}
+                    appName={this.state.appInfo && this.state.appInfo.app && this.state.appInfo.app.name}
                 />
             );
         }

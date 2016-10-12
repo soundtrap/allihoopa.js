@@ -48,7 +48,6 @@ const CONTAINER_STYLE = {
     maxWidth: '740px',
     width: '100%',
     height: '100%',
-    overflow: 'scroll',
     WebkitOverflowScrolling: 'touch',
     padding: '16px',
     fontFamily: CommonStyles.FONT_STACK,

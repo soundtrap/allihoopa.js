@@ -64,6 +64,8 @@ const WARNING_STYLE: React.CSSProperties = {
     textAlign: 'center',
 
     [CommonStyles.MQ_MIN_WIDTH_SMALL]: {
-        maxWidth: 300,
+        width: 300,
+        left: '50%',
+        marginLeft: -150,
     },
 };
