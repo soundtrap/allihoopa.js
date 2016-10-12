@@ -1,7 +1,15 @@
 Change log
 ==========
 
-## [Unreleased]
+## [0.3.0] — 2016-10-12
+
+### Added
+
+* Drop support
+
+### Breaking changes
+
+* Parameters to the `setup()` method were renamed
 
 ## [0.2.0] — 2016-09-22
 
@@ -15,5 +23,5 @@ Change log
 Empty release
 
 
-[Unreleased]: https://github.com/allihoopa/allihoopa.js/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/allihoopa/allihoopa.js/compare/v0.1.0...v0.2.0
+[0.3.0]: https://github.com/allihoopa/allihoopa.js/compare/v0.2.0...v0.3.0
