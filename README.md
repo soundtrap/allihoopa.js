@@ -1,8 +1,8 @@
 Allihoopa.js
 ============
 
-[![Travis](https://img.shields.io/travis/allihoopa/allihoopa.js/master.svg?maxAge=2592000&style=flat-square)]()
-[![npm](https://img.shields.io/npm/v/allihoopa.svg?maxAge=2592000&style=flat-square)]()
+[![Travis](https://travis-ci.org/allihoopa/allihoopa.js.svg?branch=master)]()
+[![npm](https://img.shields.io/npm/v/allihoopa.svg)]()
 
 ----
 
