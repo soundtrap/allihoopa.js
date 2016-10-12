@@ -1,8 +1,8 @@
 Allihoopa.js
 ============
 
-[![Travis](https://travis-ci.org/allihoopa/allihoopa.js.svg?branch=master)]()
-[![npm](https://img.shields.io/npm/v/allihoopa.svg)]()
+[![Travis](https://travis-ci.org/allihoopa/allihoopa.js.svg?branch=master)](https://travis-ci.org/allihoopa/allihoopa.js)
+[![npm](https://img.shields.io/npm/v/allihoopa.svg)](https://www.npmjs.com/package/allihoopa)
 
 ----
 
