@@ -37,14 +37,14 @@ through to this project.
 
 ## Building and running
 
-In order to run the example, you need an app key and secret to be used with
-the Allihoopa APIs. These should be specified in the  `ALLIHOOPA_APP_KEY` and
-`ALLIHOOPA_APP_SECRET` environment variables, e.g. by adding the following to
+In order to run the example, you need an app identifier and api key to be used with
+the Allihoopa APIs. These should be specified in the  `ALLIHOOPA_APP_IDENTIFIER` and
+`ALLIHOOPA_API_KEY` environment variables, e.g. by adding the following to
 your `~/.profile`:
 
 ```bash
-export ALLIHOOPA_APP_KEY=your-app-key
-export ALLIHOOPA_APP_SECRET=your-app-secret
+export ALLIHOOPA_APP_IDENTIFIER=your-app-identifier
+export ALLIHOOPA_API_KEY=your-api-key
 ```
 
 To work on the SDK through this example, you will need three processes running
